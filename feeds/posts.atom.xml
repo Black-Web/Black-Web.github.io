@@ -2654,7 +2654,7 @@ h6:hover .anchor-link {
         &lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.08&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;b&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.01413&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Transformer'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'T_1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bus0&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Bus 3'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;bus1&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;'Bus 1'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'pi'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tap_ratio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="n"&gt;model&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'pi'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;tap_ratio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mf"&gt;1.1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mf"&gt;0.3&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mf"&gt;1.1&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
 &lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Generator'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'G_4'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;bus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'Bus 4'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;control&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'Slack'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="n"&gt;net&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'Generator'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s1"&gt;'G_3'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="n"&gt;bus&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'Bus 3'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;control&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s1"&gt;'PV'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
@@ -2673,9 +2673,10 @@ h6:hover .anchor-link {
 &lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
-&lt;p&gt;关于上面的代码，有两点需要注意：&lt;/p&gt;
+&lt;p&gt;关于上面的代码，有三点需要注意：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;变压器的变比默认是bus0与bus1的电压之比，即$k = V_{bus0} : V_{bus1}$&lt;/li&gt;
+&lt;li&gt;PyPSA内部的变压器模型把输入的阻抗和导纳参数认为是归算到低压侧的参数，因此上面需要把参数除以变比平方来归算到低压侧。&lt;/li&gt;
 &lt;li&gt;连接有发电机的母线（Bus）的控制类型会随发电机的类型而改变。
 文档原文是：&lt;blockquote&gt;&lt;p&gt;Note that the control strategy for active and reactive power PQ/PV/Slack is set on the generators NOT on the buses.
 Buses then inherit the control strategy from the generators attached at the bus (defaulting to PQ if there is no generator
@@ -2735,6 +2736,18 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
 Index(['T_1'], dtype='object')
 WARNING:pypsa.components:The following transformers have zero s_nom, which is used to define the impedance and will thus break the load flow:
 Index(['T_1'], dtype='object')
+WARNING:pypsa.components:The following attributes of the dataframe transformers have the wrong dtype:
+Index(['tap_side', 'tap_position'], dtype='object', name='attribute')
+They are:
+attribute
+tap_side        int64
+tap_position    int64
+dtype: object
+but should be:
+attribute
+tap_side        int32
+tap_position    int32
+Name: dtype, dtype: object
 WARNING:pypsa.components:The following attributes of the dataframe generators have the wrong dtype:
 Index(['min_up_time', 'min_down_time', 'initial_status'], dtype='object', name='attribute')
 They are:
@@ -2748,18 +2761,6 @@ attribute
 min_up_time       int32
 min_down_time     int32
 initial_status    int32
-Name: dtype, dtype: object
-WARNING:pypsa.components:The following attributes of the dataframe transformers have the wrong dtype:
-Index(['tap_side', 'tap_position'], dtype='object', name='attribute')
-They are:
-attribute
-tap_side        int64
-tap_position    int64
-dtype: object
-but should be:
-attribute
-tap_side        int32
-tap_position    int32
 Name: dtype, dtype: object
 &lt;/pre&gt;
 &lt;/div&gt;
@@ -2795,7 +2796,7 @@ Name: dtype, dtype: object
 &lt;div class="output_subarea output_stream output_stderr output_text"&gt;
 &lt;pre&gt;INFO:pypsa.pf:Slack bus for sub-network 0 is Bus 4
 INFO:pypsa.pf:Performing non-linear load-flow on AC sub-network SubNetwork 0 for snapshots Index(['now'], dtype='object')
-INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.031246 seconds
+INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.015626 seconds
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2804,7 +2805,7 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 &lt;div class="output_text output_subarea output_execute_result"&gt;
 &lt;pre&gt;{'n_iter':      0
  now  3, 'error':                 0
- now  1.750689e-07, 'converged':         0
+ now  1.104187e-07, 'converged':         0
  now  True}&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2873,7 +2874,7 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 &lt;td&gt;-0.3&lt;/td&gt;
 &lt;td&gt;-0.55&lt;/td&gt;
 &lt;td&gt;0.5&lt;/td&gt;
-&lt;td&gt;0.368194&lt;/td&gt;
+&lt;td&gt;0.367883&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -2927,8 +2928,8 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 &lt;th&gt;now&lt;/th&gt;
 &lt;td&gt;-0.18&lt;/td&gt;
 &lt;td&gt;-0.13&lt;/td&gt;
-&lt;td&gt;0.098966&lt;/td&gt;
-&lt;td&gt;0.274605&lt;/td&gt;
+&lt;td&gt;0.093411&lt;/td&gt;
+&lt;td&gt;0.264698&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -2980,9 +2981,9 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;th&gt;now&lt;/th&gt;
-&lt;td&gt;0.246021&lt;/td&gt;
-&lt;td&gt;-0.046021&lt;/td&gt;
-&lt;td&gt;-0.310259&lt;/td&gt;
+&lt;td&gt;0.246244&lt;/td&gt;
+&lt;td&gt;-0.046244&lt;/td&gt;
+&lt;td&gt;-0.31001&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -3035,8 +3036,8 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;th&gt;now&lt;/th&gt;
-&lt;td&gt;0.981836&lt;/td&gt;
-&lt;td&gt;0.963259&lt;/td&gt;
+&lt;td&gt;0.984675&lt;/td&gt;
+&lt;td&gt;0.964798&lt;/td&gt;
 &lt;td&gt;1.1&lt;/td&gt;
 &lt;td&gt;1.05&lt;/td&gt;
 &lt;/tr&gt;
@@ -3091,9 +3092,9 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;th&gt;now&lt;/th&gt;
-&lt;td&gt;-0.460272&lt;/td&gt;
-&lt;td&gt;-6.451048&lt;/td&gt;
-&lt;td&gt;8.327503&lt;/td&gt;
+&lt;td&gt;-0.500171&lt;/td&gt;
+&lt;td&gt;-6.450304&lt;/td&gt;
+&lt;td&gt;6.732349&lt;/td&gt;
 &lt;td&gt;0.0&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;

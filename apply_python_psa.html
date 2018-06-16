@@ -1346,7 +1346,7 @@ h6:hover .anchor-link {
         <span class="n">r</span><span class="o">=</span><span class="mf">0.08</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mf">0.01413</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Transformer'</span><span class="p">,</span><span class="s1">'T_1'</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">'Bus 3'</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">'Bus 1'</span><span class="p">,</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="s1">'pi'</span><span class="p">,</span> <span class="n">tap_ratio</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="s1">'pi'</span><span class="p">,</span> <span class="n">tap_ratio</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.3</span> <span class="o">/</span> <span class="mf">1.1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Generator'</span><span class="p">,</span><span class="s1">'G_4'</span><span class="p">,</span><span class="n">bus</span> <span class="o">=</span> <span class="s1">'Bus 4'</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="s1">'Slack'</span><span class="p">)</span>
 <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Generator'</span><span class="p">,</span><span class="s1">'G_3'</span><span class="p">,</span><span class="n">bus</span> <span class="o">=</span> <span class="s1">'Bus 3'</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="s1">'PV'</span><span class="p">,</span>
@@ -1365,9 +1365,10 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>关于上面的代码，有两点需要注意：</p>
+<p>关于上面的代码，有三点需要注意：</p>
 <ul>
 <li>变压器的变比默认是bus0与bus1的电压之比，即$k = V_{bus0} : V_{bus1}$</li>
+<li>PyPSA内部的变压器模型把输入的阻抗和导纳参数认为是归算到低压侧的参数，因此上面需要把参数除以变比平方来归算到低压侧。</li>
 <li>连接有发电机的母线（Bus）的控制类型会随发电机的类型而改变。
 文档原文是：<blockquote><p>Note that the control strategy for active and reactive power PQ/PV/Slack is set on the generators NOT on the buses.
 Buses then inherit the control strategy from the generators attached at the bus (defaulting to PQ if there is no generator
@@ -1427,6 +1428,18 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
 Index(['T_1'], dtype='object')
 WARNING:pypsa.components:The following transformers have zero s_nom, which is used to define the impedance and will thus break the load flow:
 Index(['T_1'], dtype='object')
+WARNING:pypsa.components:The following attributes of the dataframe transformers have the wrong dtype:
+Index(['tap_side', 'tap_position'], dtype='object', name='attribute')
+They are:
+attribute
+tap_side        int64
+tap_position    int64
+dtype: object
+but should be:
+attribute
+tap_side        int32
+tap_position    int32
+Name: dtype, dtype: object
 WARNING:pypsa.components:The following attributes of the dataframe generators have the wrong dtype:
 Index(['min_up_time', 'min_down_time', 'initial_status'], dtype='object', name='attribute')
 They are:
@@ -1440,18 +1453,6 @@ attribute
 min_up_time       int32
 min_down_time     int32
 initial_status    int32
-Name: dtype, dtype: object
-WARNING:pypsa.components:The following attributes of the dataframe transformers have the wrong dtype:
-Index(['tap_side', 'tap_position'], dtype='object', name='attribute')
-They are:
-attribute
-tap_side        int64
-tap_position    int64
-dtype: object
-but should be:
-attribute
-tap_side        int32
-tap_position    int32
 Name: dtype, dtype: object
 </pre>
 </div>
@@ -1487,7 +1488,7 @@ Name: dtype, dtype: object
 <div class="output_subarea output_stream output_stderr output_text">
 <pre>INFO:pypsa.pf:Slack bus for sub-network 0 is Bus 4
 INFO:pypsa.pf:Performing non-linear load-flow on AC sub-network SubNetwork 0 for snapshots Index(['now'], dtype='object')
-INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.031246 seconds
+INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.015626 seconds
 </pre>
 </div>
 </div>
@@ -1496,7 +1497,7 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 <div class="output_text output_subarea output_execute_result">
 <pre>{'n_iter':      0
  now  3, 'error':                 0
- now  1.750689e-07, 'converged':         0
+ now  1.104187e-07, 'converged':         0
  now  True}</pre>
 </div>
 </div>
@@ -1565,7 +1566,7 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 <td>-0.3</td>
 <td>-0.55</td>
 <td>0.5</td>
-<td>0.368194</td>
+<td>0.367883</td>
 </tr>
 </tbody>
 </table>
@@ -1619,8 +1620,8 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 <th>now</th>
 <td>-0.18</td>
 <td>-0.13</td>
-<td>0.098966</td>
-<td>0.274605</td>
+<td>0.093411</td>
+<td>0.264698</td>
 </tr>
 </tbody>
 </table>
@@ -1672,9 +1673,9 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 <tbody>
 <tr>
 <th>now</th>
-<td>0.246021</td>
-<td>-0.046021</td>
-<td>-0.310259</td>
+<td>0.246244</td>
+<td>-0.046244</td>
+<td>-0.31001</td>
 </tr>
 </tbody>
 </table>
@@ -1727,8 +1728,8 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 <tbody>
 <tr>
 <th>now</th>
-<td>0.981836</td>
-<td>0.963259</td>
+<td>0.984675</td>
+<td>0.964798</td>
 <td>1.1</td>
 <td>1.05</td>
 </tr>
@@ -1783,9 +1784,9 @@ INFO:pypsa.pf:Newton-Raphson solved in 3 iterations with error of 0.000000 in 0.
 <tbody>
 <tr>
 <th>now</th>
-<td>-0.460272</td>
-<td>-6.451048</td>
-<td>8.327503</td>
+<td>-0.500171</td>
+<td>-6.450304</td>
+<td>6.732349</td>
 <td>0.0</td>
 </tr>
 </tbody>
