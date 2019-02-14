@@ -2,12 +2,12 @@
 <html lang="zh-cn">
 
 <head>
-        <meta charset="utf-8">
+            <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-        <title>Dawn's博客 - Articles in the About category</title>
+        <title>深度学习笔记(Deep Learning With Python 第三章)</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -31,8 +31,26 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-                <meta property="og:locale" content="">
+
+
+        <meta name="description" content="《Deep learning with python》学习手记 对深度学习概念的理解...">
+
+        <meta name="author" content="Dawn">
+
+        <meta name="tags" content="python">
+        <meta name="tags" content="deep-learning">
+
+	                <meta property="og:locale" content="">
 		<meta property="og:site_name" content="Dawn's博客">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="/author/dawn.html">
+	<meta property="og:url" content="/noteofdlpych3.html">
+	<meta property="og:title" content="深度学习笔记(Deep Learning With Python 第三章)">
+	<meta property="article:published_time" content="2019-02-14 17:56:00+08:00">
+            <meta property="og:description" content="《Deep learning with python》学习手记 对深度学习概念的理解...">
+
+            <meta property="og:image" content="/theme/images/post-bg.jpg">
 </head>
 
 <body>
@@ -65,12 +83,17 @@
     </nav>
 
     <!-- Page Header -->
-        <header class="intro-header" style="background-image: url('/theme/images/home-bg.jpg')">
+        <header class="intro-header" style="background-image: url('/theme/images/post-bg.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <h1>Articles in the About category</h1>
+                        <h1>深度学习笔记(Deep Learning With Python 第三章)</h1>
+                        <span class="meta">Posted by
+                                <a href="/author/dawn.html">Dawn</a>
+                             on 周四 14 二月 2019
+                        </span>
+                        
                     </div>
                 </div>
             </div>
@@ -81,20 +104,33 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <div class="post-preview">
-            <a href="/about.html" rel="bookmark" title="Permalink to 关于">
-                <h2 class="post-title">
-                    关于
-                </h2>
-            </a>
-                <p class="article-summary">
-                    About me and this blog.
-                </p>
-            <p class="post-meta">Posted by
-                    <a href="/author/dawn.html">Dawn</a>
-                 on 周五 20 四月 2018
-            </p>
+    <!-- Post Content -->
+    <article>
+        <h1>《Deep learning with python》学习手记</h1>
+<h2>对深度学习概念的理解</h2>
+<p>深度学习的“深度”是指<code>多层</code>数据变换（映射），可以认为是多次复合的函数，实现深度学习算法的数据结构被称为神经网络，“学习”实际上用“反馈”或”调整”形容更恰当一点。深度学习算法的输入是原始数据和期望的输出，单次的输出没有意义，必须通过把单次输出与期望输出进行差异对比，通过“反馈”来动态调整网络内各个权重，从而使下一次输出更加接近期望输出，反复调整，最终达到某个理想输出。</p>
+<p>有点类似控制理论中的反馈控制系统，不过是离散形式的。</p>
+<p>误区纠正：如上所说，神经网络是对数据进行层层变换，抽取出数据不同层面的信息，并以权重（weights）区分不同信息对结果的影响程度，<strong>并非仿生学，和生物学中的大脑神经网络没有太大关系</strong>，如果说早期的人工神经网络是受了生物神经元的连接的启发，那么后来的发展则越来越少地来源于生物，更多的是来自工程实践。</p>
+<h2>深度学习与机器学习</h2>
+<p>深度学习是机器学习的子集，机器学习的主流经历了传统的基于统计的学习(如贝叶斯分类器、logistic回归)，以支持向量机(SVM)为主的高维非线性映射分类法，决策树与随机森林，然后是以神经网络为代表的深度学习。</p>
+<h2>张量（tensor）及其基本运算</h2>
+<p>标量（scalar）是0维张量，向量（vector）是一维张量，矩阵（matrix）是2维张量，此外还有更高维的张量。</p>
+<p>张量的加减运算与向量或矩阵的加减相同，是逐元素相加（element wise）。维数不满足运算规则时，适用散布规则（broadcast）。即维数更低的一方升维以满足运算规则，原张量是升维后张量的切片。</p>
+<p>张量的乘除，#待补充</p>
+<h2>神经网络的层</h2>
+<p>神经网络的拓扑结构决定了一个解空间（hypothesis space）。</p>
+<blockquote>
+<p>picking the right network architect is more than an art than science.</p>
+</blockquote>
+<h2>loss function</h2>
+<p>将其翻译为损失函数让人摸不着头脑，目标函数更恰当，是要最小化的函数。虽然对大多数问题已经有较好的标准，但对特定问题，给出合适的loss function可能需要专业的知识。</p>
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="/tag/python.html">python</a>, <a href="/tag/deep-learning.html">deep-learning</a></p>
         </div>
+
+    <hr>
 
             </div>
         </div>
