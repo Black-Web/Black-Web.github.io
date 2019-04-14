@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <title>把椭圆扶正</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/github_jekyll.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="本文禁止转载 把椭圆扶正 最近遇到两个相互垂直的简谐运动叠加的问题，运用线性代数坐标变换可以完美解决。 画一个椭圆 -- 互相垂直的同频振荡 设想有一个小球同时在x,y两个方向上运动，并且x,y方向上的位移满足参数方程： $$\begin{aligned}...">
+
+        <meta name="author" content="Dawn">
+
+        <meta name="tags" content="解析几何">
+        <meta name="tags" content="偏振">
+        <meta name="tags" content="椭圆">
+
+	                <meta property="og:locale" content="">
+		<meta property="og:site_name" content="Dawn's博客">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="/author/dawn.html">
+	<meta property="og:url" content="/rectifytheellipse.html">
+	<meta property="og:title" content="把椭圆扶正">
+	<meta property="article:published_time" content="2019-03-28 00:00:00+08:00">
+            <meta property="og:description" content="本文禁止转载 把椭圆扶正 最近遇到两个相互垂直的简谐运动叠加的问题，运用线性代数坐标变换可以完美解决。 画一个椭圆 -- 互相垂直的同频振荡 设想有一个小球同时在x,y两个方向上运动，并且x,y方向上的位移满足参数方程： $$\begin{aligned}...">
+
+            <meta property="og:image" content="/theme/images/post-bg.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Dawn's博客</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/categories">分类</a></li>
+
+                            <li><a href="/pages/about.html">关于</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/theme/images/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>把椭圆扶正</h1>
+                        <span class="meta">Posted by
+                                <a href="/author/dawn.html">Dawn</a>
+                             on 周四 28 三月 2019
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <div style="text-align:center;color:rgba(0,0,0,.3)">本文禁止转载</div>
+<h1>把椭圆扶正</h1>
+<p>最近遇到两个相互垂直的简谐运动叠加的问题，运用线性代数坐标变换可以<s>完美</s>解决。</p>
+<h2>画一个椭圆 -- 互相垂直的同频振荡</h2>
+<p>设想有一个小球同时在x,y两个方向上运动，并且x,y方向上的位移满足参数方程：</p>
+<div class="math">$$\begin{aligned}
+x&amp;=A_1\cos(\omega t+\delta_1)\\
+ &amp;=A_1(\cos\omega t \cos\delta_1-\sin\omega t\sin\delta_1)
+ \tag{1}
+\end{aligned}
+ $$</div>
+<div class="math">$$\begin{aligned}
+y&amp;=A_2\cos(\omega t+\delta_2)\\
+ &amp;=A_2(\cos\omega t \cos\delta_2-\sin\omega t\sin\delta_2)
+ \tag{2}
+\end{aligned}
+$$</div>
+<p>那么这个小球的运动轨迹是怎样的呢？为了回答这个问题，从以上两式中消去时间变量<span class="math">\(t\)</span>：</p>
+<p><span class="math">\((1)\div A_1\times \cos\delta_2\)</span>得到：
+</p>
+<div class="math">$$ \frac{x}{A_1}\cos\delta_2=\cos\omega t\cos\delta_1\cos\delta_2-\sin\omega t\sin\delta_1\cos\delta_2 
+\tag{3}
+$$</div>
+<p><span class="math">\((2)\div A_2\times \cos\delta_1\)</span>得到：
+</p>
+<div class="math">$$ \frac{y}{A_2}\cos\delta_1=\cos\omega t\cos\delta_2\cos\delta_1-\sin\omega t\sin\delta_2\cos\delta_1
+\tag{4}
+$$</div>
+<p>
+<span class="math">\((3)-(4)\)</span>：
+</p>
+<div class="math">$$\frac{x}{A_1}\cos\delta_2-\frac{y}{A_2}\cos\delta_1=\sin\omega t \sin(\delta_2-\delta_1)
+\tag{5}
+$$</div>
+<p>同理，交错乘以<span class="math">\(\sin\delta_2\)</span>和<span class="math">\(\sin\delta_1\)</span>并相减后得到：</p>
+<div class="math">$$\frac{x}{A_1}\sin\delta_2-\frac{y}{A_2}\sin\delta_1=\cos\omega t \sin(\delta_2-\delta_1)
+\tag{6}
+$$</div>
+<p>
+再将<span class="math">\((5)、(6)\)</span>式平方相加，化简后得到：
+</p>
+<div class="math">$$ \frac{x^2}{A_1^2}+\frac{y^2}{A_2^2}-2\frac{xy}{A_1A_2}\cos(\delta_2-\delta_1)=\sin^2(\delta_2-\delta_1) \tag{7}$$</div>
+<p>
+这便得到了消去时间变量后的曲线方程，它是一个关于<span class="math">\(x\)</span>、<span class="math">\(y\)</span>的二次曲线，在<span class="math">\(\delta_2\ne\delta_1\)</span>时可能有抛物线、双曲线、椭圆三种情况，观察式<span class="math">\((1)\)</span>、<span class="math">\((2)\)</span>可知<span class="math">\(x\)</span>、<span class="math">\(y\)</span>均不会到无穷大，可以断定是椭圆，中心在原点。并且，如果<span class="math">\(\delta_2-\delta_1\ne k\cdot\frac{\pi}{2}\)</span>，这个椭圆的对称轴不会落在坐标轴上，是一个斜着的椭圆。</p>
+<h2>坐标轴旋转</h2>
+<p>接下来的问题是，这个椭圆的倾斜角是怎样的？</p>
+<p>可以选择适当的坐标旋转变换，使椭圆在新坐标系下关于坐标轴对称，从方程上看，是要使变换后的xy交叉项消掉，关于坐标变换的总结，<a href="/linearalgebraandaxistransform">另有成文</a>。这里直接给出旋转角<span class="math">\(\alpha\)</span>应满足的关系：</p>
+<div class="math">$$ \tan2\alpha = \frac{2A_1A_2}{A_1^2A_2^2}\cos(\delta_2 -\delta_1)\tag{8}$$</div>
+<p>可以猜测根据此关系式能得到4个满足条件的<span class="math">\(\alpha\)</span>，且互差<span class="math">\(\frac{\pi}{2}\)</span>。</p>
+<h2>特征值与轴长的关系</h2>
+<p>那么椭圆的长半轴、短半轴又是多少？</p>
+<p>至少有两种求解方法，一是利用上面得到的旋转角度，写出新坐标系下的椭圆方程得到；二是直接使用拉格朗日乘子法求解函数<span class="math">\(x^2+y^2\)</span>的最值。第二种方法运算量也许小些。</p>
+<p>这里使用实对称矩阵的特征值法解决。</p>
+<p>式<span class="math">\((7)\)</span>是一个二次型，令<span class="math">\(\Delta=\delta_2 -\delta_1\)</span>，该二次型矩阵为：</p>
+<div class="math">$$ \textbf{A}=\left[\begin{matrix}\frac{1}{A_{1}^{2} \sin^{2}{\left (\Delta \right )}} &amp; - \frac{\cos{\left (\Delta \right )}}{A_{1} A_{2} \sin^{2}{\left (\Delta \right )}}\\- \frac{\cos{\left (\Delta \right )}}{A_{1} A_{2} \sin^{2}{\left (\Delta \right )}} &amp; \frac{1}{A_{2}^{2} \sin^{2}{\left (\Delta \right )}}\end{matrix}\right] \tag{9}$$</div>
+<p>由线性代数理论知道，存在正交变换<span class="math">\([x,y]^T=\textbf{P} \cdot [X,Y]^T\)</span>，使二次型化为标准型，设特征值为<span class="math">\(\lambda_1\)</span>、<span class="math">\(\lambda_2\)</span>，则该变换使方程化为<span class="math">\(\lambda_1X^2+\lambda_2Y^2=1\)</span>，容易知道长半轴和短半轴为<span class="math">\(\frac{1}{\sqrt{\lambda_1}}\)</span>、<span class="math">\(\frac{1}{\sqrt{\lambda_1}}\)</span>。其形式略显复杂。</p>
+<p>这种方法运算量也不小。</p>
+<p>如果反过来要求在已知长短半轴和椭圆倾斜角的情况下，求两个方向上的简谐运动参数，使用以上方法将异常复杂。</p>
+<h2>小结</h2>
+<p>执意使用笛卡尔坐标系的代价是运算量大和表达式形式复杂，并且消去时间变量后无法得知小球旋转的方向。需要变通。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="/tag/jie-xi-ji-he.html">解析几何</a>, <a href="/tag/pian-zhen.html">偏振</a>, <a href="/tag/tuo-yuan.html">椭圆</a></p>
+        </div>
+
+    <hr>
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://github.com/Black-Web/">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-visit my github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>. <br />        &copy;  Dawn
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
