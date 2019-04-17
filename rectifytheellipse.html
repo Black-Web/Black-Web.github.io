@@ -116,8 +116,7 @@
 x&amp;=A_1\cos(\omega t+\delta_1)\\
  &amp;=A_1(\cos\omega t \cos\delta_1-\sin\omega t\sin\delta_1)
  \tag{1}
-\end{aligned}
- $$</div>
+\end{aligned}$$</div>
 <div class="math">$$\begin{aligned}
 y&amp;=A_2\cos(\omega t+\delta_2)\\
  &amp;=A_2(\cos\omega t \cos\delta_2-\sin\omega t\sin\delta_2)
@@ -153,7 +152,7 @@ $$</div>
 这便得到了消去时间变量后的曲线方程，它是一个关于<span class="math">\(x\)</span>、<span class="math">\(y\)</span>的二次曲线，在<span class="math">\(\delta_2\ne\delta_1\)</span>时可能有抛物线、双曲线、椭圆三种情况，观察式<span class="math">\((1)\)</span>、<span class="math">\((2)\)</span>可知<span class="math">\(x\)</span>、<span class="math">\(y\)</span>均不会到无穷大，可以断定是椭圆，中心在原点。并且，如果<span class="math">\(\delta_2-\delta_1\ne k\cdot\frac{\pi}{2}\)</span>，这个椭圆的对称轴不会落在坐标轴上，是一个斜着的椭圆。</p>
 <h2>坐标轴旋转</h2>
 <p>接下来的问题是，这个椭圆的倾斜角是怎样的？</p>
-<p>可以选择适当的坐标旋转变换，使椭圆在新坐标系下关于坐标轴对称，从方程上看，是要使变换后的xy交叉项消掉，关于坐标变换的总结，<a href="/linearalgebraandaxistransform">另有成文</a>。这里直接给出旋转角<span class="math">\(\alpha\)</span>应满足的关系：</p>
+<p>可以选择适当的坐标旋转变换，使椭圆在新坐标系下关于坐标轴对称，从方程上看，是要使变换后的xy交叉项消掉，关于坐标变换的总结，<a href="/linearalgebraandaxistransform.html">另有成文</a>。这里直接给出旋转角<span class="math">\(\alpha\)</span>应满足的关系：</p>
 <div class="math">$$ \tan2\alpha = \frac{2A_1A_2}{A_1^2A_2^2}\cos(\delta_2 -\delta_1)\tag{8}$$</div>
 <p>可以猜测根据此关系式能得到4个满足条件的<span class="math">\(\alpha\)</span>，且互差<span class="math">\(\frac{\pi}{2}\)</span>。</p>
 <h2>特征值与轴长的关系</h2>
@@ -162,7 +161,7 @@ $$</div>
 <p>这里使用实对称矩阵的特征值法解决。</p>
 <p>式<span class="math">\((7)\)</span>是一个二次型，令<span class="math">\(\Delta=\delta_2 -\delta_1\)</span>，该二次型矩阵为：</p>
 <div class="math">$$ \textbf{A}=\left[\begin{matrix}\frac{1}{A_{1}^{2} \sin^{2}{\left (\Delta \right )}} &amp; - \frac{\cos{\left (\Delta \right )}}{A_{1} A_{2} \sin^{2}{\left (\Delta \right )}}\\- \frac{\cos{\left (\Delta \right )}}{A_{1} A_{2} \sin^{2}{\left (\Delta \right )}} &amp; \frac{1}{A_{2}^{2} \sin^{2}{\left (\Delta \right )}}\end{matrix}\right] \tag{9}$$</div>
-<p>由线性代数理论知道，存在正交变换<span class="math">\([x,y]^T=\textbf{P} \cdot [X,Y]^T\)</span>，使二次型化为标准型，设特征值为<span class="math">\(\lambda_1\)</span>、<span class="math">\(\lambda_2\)</span>，则该变换使方程化为<span class="math">\(\lambda_1X^2+\lambda_2Y^2=1\)</span>，容易知道长半轴和短半轴为<span class="math">\(\frac{1}{\sqrt{\lambda_1}}\)</span>、<span class="math">\(\frac{1}{\sqrt{\lambda_1}}\)</span>。其形式略显复杂。</p>
+<p>由线性代数理论知道，存在正交变换<span class="math">\([x,y]^T=\textbf{P} \cdot [X,Y]^T\)</span>，使二次型化为标准型，设特征值为<span class="math">\(\lambda_1\)</span>、<span class="math">\(\lambda_2\)</span>，则该变换使方程化为<span class="math">\(\lambda_1X^2+\lambda_2Y^2=1\)</span>，容易知道长半轴和短半轴为<span class="math">\(\frac{1}{\sqrt{\lambda_1}}\)</span>、<span class="math">\(\frac{1}{\sqrt{\lambda_2}}\)</span>。其形式略显复杂。</p>
 <p>这种方法运算量也不小。</p>
 <p>如果反过来要求在已知长短半轴和椭圆倾斜角的情况下，求两个方向上的简谐运动参数，使用以上方法将异常复杂。</p>
 <h2>小结</h2>
