@@ -121,7 +121,7 @@
 <p>更加一般的情况下的证明如下：设两个满秩方阵：</p>
 <div class="math">$$A=[\overrightarrow{\alpha_1},\overrightarrow{\alpha_2},\overrightarrow{\alpha_3}\dots],
 B=[\overrightarrow{\beta_1},\overrightarrow{\beta_2},\overrightarrow{\beta_3}\dots]$$</div>
-<p>两矩阵中的列向量各自构成空间的基底，并设<span class="math">\(B\)</span>中各列向量在<span class="math">\(A\)</span>中的坐标依次为<span class="math">\(p_1,p_2,p_3\dots\)</span>，记矩阵<span class="math">\(P=[p_1,p_2,p_3\dots]\)</span>，用矩阵表示为：</p>
+<p>两矩阵中的列向量各自构成空间的基底，并设<span class="math">\(B\)</span>中各列向量在<span class="math">\(A\)</span>中的坐标依次为<span class="math">\(\overrightarrow{p_1},\overrightarrow{p_2},\overrightarrow{p_3}\dots\)</span>，记矩阵<span class="math">\(P=[\overrightarrow{p_1},\overrightarrow{p_2},\overrightarrow{p_3}\dots]\)</span>，用矩阵表示为：</p>
 <div class="math">$$B=A\cdot P\tag{1}$$</div>
 <p>再设某一向量再<span class="math">\(A\)</span>坐标系下的坐标为<span class="math">\(\overrightarrow{x}\)</span>，在<span class="math">\(B\)</span>坐标系下的坐标为<span class="math">\(\overrightarrow{y}\)</span>，那么：</p>
 <div class="math">$$\begin{aligned}
@@ -135,14 +135,36 @@ A\cdot \overrightarrow{x}&amp;=B\cdot\overrightarrow{y}\\
 <p>其实命名这种事完全可以反着来，比如如果从坐标的变换关系来看，根据<span class="math">\((2)\)</span>式，可以认为<span class="math">\(P\)</span>是从<span class="math">\(B\)</span>到<span class="math">\(A\)</span>的过渡矩阵。一切只是惯例问题。</p>
 <p><strong>上面的说法太抽象了，来点具体的。</strong></p>
 <h2>具象化的例子</h2>
-<h1>待补充</h1>
+<p>看一个二维的情况。</p>
+<p><img alt="坐标变换的例子" src="./images/axistransform.svg"/></p>
+<p>如上图所示，原坐标系的两个基向量为<span class="math">\(\overrightarrow{x_1}\)</span>、<span class="math">\(\overrightarrow{x_2}\)</span>，把它们正向旋转<span class="math">\(\pi/4\)</span>角度后得到两个新的向量<span class="math">\(\overrightarrow{y_1}\)</span>、<span class="math">\(\overrightarrow{y_2}\)</span>，新向量构成新坐标系的基底，记原坐标系为<span class="math">\(x\)</span>坐标系，新坐标系为<span class="math">\(y\)</span>坐标系（之所以不使用惯用的<span class="math">\((x,y)\)</span>来描述平面点，是为了向高维推广）。</p>
+<p>根据图示及以上结论，把<span class="math">\(y\)</span>坐标系的基向量在<span class="math">\(x\)</span>坐标系下的坐标依序排列，可写出从<span class="math">\(x\)</span>坐标系到<span class="math">\(y\)</span>坐标系的过渡矩阵为：</p>
+<div class="math">$$P=\begin{bmatrix}
+    \cos\theta &amp;-\sin\theta\\
+    \sin\theta &amp; ~~~~\cos\theta\\
+\end{bmatrix}
+~\underrightarrow{\theta=\frac{\pi}{4}}~
+\begin{bmatrix}
+    \frac{\sqrt{2}}{2} &amp; -\frac{\sqrt{2}}{2}\\
+    \frac{\sqrt{2}}{2} &amp; ~~~\frac{\sqrt{2}}{2}
+\end{bmatrix}$$</div>
+<p>点A在<span class="math">\(y\)</span>坐标系下的坐标为：</p>
+<div class="math">$$A：\begin{bmatrix}
+    1\\0
+\end{bmatrix}_{y}$$</div>
+<p>那么A在<span class="math">\(x\)</span>坐标系下的坐标便用<span class="math">\(P\)</span>左乘上面的坐标得到，即：</p>
+<div class="math">$$A：\begin{bmatrix}
+    \frac{\sqrt{2}}{2}\\\frac{\sqrt{2}}{2}
+\end{bmatrix}_{x}$$</div>
+<p>从图形上可以知道这是正确的结果，一般地，对于其他的点也是适用的。</p>
+<p>对于更细致的公式推导，可以使用复数相乘旋转或使用极坐标系作为中介的方式获得，人懒，这里不写了。</p>
 <h2>小结</h2>
 <ul>
 <li>过渡矩阵的说法是从基底的变换关系来定义的，过渡矩阵右乘原坐标系的基底得到新坐标系基底，或者换一种说法：过渡矩阵是新坐标系基底在原坐标系下的坐标。</li>
 <li>过渡矩阵左乘新坐标系下的坐标得到同一点在原坐标系下的坐标描述。</li>
 </ul>
 <h2>再扯远一点 -- 谈谈惯例的事</h2>
-<p>小结中的两条结论是在[<code>列向量惯例</code>]<sup id="fnref:fn"><a class="footnote-ref" href="#fn:fn" rel="footnote">1</a></sup>下得到的，如果采用<code>行向量惯例</code>，那么结论中的<em>左乘</em>和<em>右乘</em>应互相调换。</p>
+<p>小结中的两条结论是在<code>列向量惯例</code><sup id="fnref:fn"><a class="footnote-ref" href="#fn:fn" rel="footnote">1</a></sup>下得到的，如果采用<code>行向量惯例</code>，那么结论中的<em>左乘</em>和<em>右乘</em>应互相调换。</p>
 <p>那么我们为什么又习惯采用<code>列向量惯例</code>呢，一种可能的原因是写成列向量：</p>
 <div class="math">$$\begin{bmatrix}
     x_1\\x_2\\x_3\\.\\.\\.
