@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <title>论文排版的（准）终极解决方案</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/github_jekyll.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="本文主要是想推荐一款软件：Texmacs 论文排版的（准）终极解决方案 先来看看论文写作中最重要的几个需求： 公式编辑 图表、公式，标题的自动编号，含分级编号，编号格式（罗马字还是阿拉伯数字等） 自动生成术语、图表目录、章节目录 交叉引用 参考文献...">
+
+        <meta name="author" content="Dawn">
+
+        <meta name="tags" content="排版">
+        <meta name="tags" content="markdown">
+        <meta name="tags" content="写作工具">
+        <meta name="tags" content="Texmacs">
+        <meta name="tags" content="文档转换">
+        <meta name="tags" content="pandoc">
+
+	                <meta property="og:locale" content="">
+		<meta property="og:site_name" content="Dawn's博客">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="/author/dawn.html">
+	<meta property="og:url" content="/qusiultimatesolutionofpaperwithmd.html">
+	<meta property="og:title" content="论文排版的（准）终极解决方案">
+	<meta property="article:published_time" content="2019-05-12 00:00:00+08:00">
+            <meta property="og:description" content="本文主要是想推荐一款软件：Texmacs 论文排版的（准）终极解决方案 先来看看论文写作中最重要的几个需求： 公式编辑 图表、公式，标题的自动编号，含分级编号，编号格式（罗马字还是阿拉伯数字等） 自动生成术语、图表目录、章节目录 交叉引用 参考文献...">
+
+            <meta property="og:image" content="/theme/images/post-bg.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Dawn's博客</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/categories">分类</a></li>
+
+                            <li><a href="/pages/about.html">关于</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/theme/images/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>论文排版的（准）终极解决方案</h1>
+                        <span class="meta">Posted by
+                                <a href="/author/dawn.html">Dawn</a>
+                             on 周日 12 五月 2019
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <p>本文主要是想推荐一款软件：Texmacs</p>
+<h1>论文排版的（准）终极解决方案</h1>
+<p>先来看看论文写作中最重要的几个需求：</p>
+<ul>
+<li>公式编辑</li>
+<li>图表、公式，标题的自动编号，含分级编号，编号格式（罗马字还是阿拉伯数字等）</li>
+<li>自动生成术语、图表目录、章节目录</li>
+<li>交叉引用</li>
+<li>参考文献</li>
+</ul>
+<p>在word中以上都有合适的解决方案，但不够高效。不够高效是因为，每次都要用鼠标点击，深入层层叠叠的对话框找到正确的选项。当然如果愿意去学习那糟糕的VBA语言的话那另说。</p>
+<p>介绍以下内容前，先说说<code>内容</code>和<code>格式</code>的问题，首先一份文档是同时包含内容和格式的，word的处理方式是“所见即所得”，输入一段内容后用鼠标点击控制格式，控制格式的那部分代码对用户来说是不可见的；在不止一次经历了不同设备上打开同一个word文档格式错乱的糟糕事情后，我们需要另一种处理方式，“所想即所得”。</p>
+<p>所以说word不是科技论文写作的最佳选择。</p>
+<h2>方案一：markdown + pandoc + pandoc filters</h2>
+<p>markdown是什么，简单来说，就是使用特定的符号表示特定的格式，比如输入字符“# some text”会把“some text”几个字<code>渲染</code>为一级标题格式，输入字符“@some-article”会在此处插入一个对“some-article”的引用。</p>
+<p>如果还想了解更多markdown的内容，可以体验一下markdown在线编辑器<a href="https://dillinger.io/">Dillinger</a>。</p>
+<p>但是markdown本身太过简单，无法包含足够的信息量来满足科技论文的格式需求，于是有了<a href="Dillinger">pandoc</a>、<a href="https://lierdakil.github.io/pandoc-crossref/">pandoc-crossref</a>以及pandoc-citeproc，对原有的格式进行扩充。原本打算更加详细地介绍这些东西，但是有了后文将要介绍的Texmacs，就作罢。</p>
+<p>markdown的优点在于简单易学，十分钟上手，缺点也在于过于简单，需要借助pandoc或其他工具的扩充。Dawn的第一篇论文就是使用vscode编辑器写的，但是最终还是要用pandoc转换为word，因为围绕pandoc的软件还不完善，最后仍然需要手动调整一些格式。</p>
+<p>所以markdown最适合的应用场景是写博客。</p>
+<h2>方案二：LaTex</h2>
+<p>这个不多介绍，基本上属于论文排版软件中的元老和标准，“所想即所得”的极端，用户必须同时查看文档的内容和格式控制代码。缺点在于学习难度较大，语法极其古怪，需要记忆许多命令，记忆负担太重，最关键的一点在于，每次写一堆内容后还需要编译才能看到结果，语法出了点错也不好排查。</p>
+<p>而且，直接观看同时包含内容和格式代码的文档不是一个写作者应该承受的事。</p>
+<h2>可能是最好的解决方案：Texmacs</h2>
+<p>官网链接：<a href="http://Texmacs.org/tmweb/home/welcome.en.html">http://Texmacs.org/tmweb/home/welcome.en.html</a></p>
+<p>GitHub仓库链接：<a href="https://github.com/Texmacs/Texmacs">https://github.com/Texmacs/Texmacs</a></p>
+<p>作为开源软件，使用它不用担心正版授权的问题，并且它体积比office word小。虽然体积小，但它足以媲美甚至取代word，在“所见即所得”和“所想即所得”之间取得近乎完美的平衡。</p>
+<p>回顾一下本文所提到软件的交互方式和复杂程度：word用鼠标点击或快捷键，LaTex使用代码命令但是没有实时预览，markdown编辑器有实时预览但是过于简单。</p>
+<p>可以说Texmacs同时具备以上三者的优点，既可以用鼠标点击这种符合直觉没有记忆负担的方式，也可以使用部分LaTex代码并且实时呈现格式渲染效果。这就做到了word那样友好的交互方式，同时保持了方便的控制细节的能力，如果有必要还可以直接查看源代码（就是类似LaTex那种），手不用离开键盘就能调整格式，不记得命令了再用鼠标，可以说是随心所欲。</p>
+<p>复杂程度方面，Texmacs本身就是为学术论文写作者开发的软件，内置多种期刊的模板，格式控制的粒度也可以很精细，不会像markdown那样格式太少。</p>
+<h3>Texmacs那用起来超级舒心的公式编辑器</h3>
+<p>Texmacs的所有内容都可以实时预览，也可以随时查看一部分内容的源代码。</p>
+<p>最好用的功能（目前）当属公式编辑器，它可以像word或者MathType一样使用鼠标来输入一些符号或者上下标。但是对于那些希望手尽可能不要离开键盘、不希望使用鼠标这种低效的输入方式的人，更合适且高效的方式是使用宏，比如键入一个“$”符号，就会进入行内数学环境，或者键入“\equation &lt;回车&gt;”来插入一个带编号的行间公式，如果不需要编号则键入“\equation* &lt;回车&gt;”，甚至“\eqnarray &lt;回车&gt;”插入一个多行对齐的公式。这些命令类似于LaTex的数学环境，在该环境下，键入“_”进入下标，键入“^”进入上标，按左右键移动光标可以重新进入或退出上下标的输入。</p>
+<p>此外，数学符号也是同LaTex，并且更加灵活，比如要输入<span class="math">\(\alpha\)</span>，可以先输入一个“a”，然后按<code>Tab</code>键，输入的“a”就会变成<span class="math">\(\alpha\)</span>，多按几次<code>Tab</code>可以在更多字符变体之间轮换。当然，也可以直接键入“\alpha &lt;回车&gt;”。</p>
+<p><strong>所有这些都是实时预览的</strong></p>
+<h3>图表自动编号</h3>
+<p>键入“\table &lt;回车&gt;”插入一个带标题的表格，“\figure &lt;回车&gt;”插入一个带标题的图片，都带自动编号，如果不要编号则在命令后加个“*”字符比如“\table* &lt;回车&gt;”，这些和Latex差不多，不过有实时预览。</p>
+<h3>其他一些亮点</h3>
+<p>可以说只到这种程度还不足以为Texmacs带来足够的吸引力。下面还有一些Dawn认为很有吸引力，但没有深入了解的亮点。</p>
+<ul>
+<li>版本控制(写论文删删改改到头来还是第一个版本最好，那何必改呢，直接回溯到第一个版本好了)</li>
+<li>直接运行其他语言的代码并在文档中插入代码输出(jupyter notebook既视感，配合Axiom或者sympy或者其他代数运算系统简直是写公式神器)</li>
+<li>转换为LaTex代码，并像LaTex一样自定义宏</li>
+<li>直接根据Texmacs文档生成一个网站(可以用来写博客)</li>
+</ul>
+<h2>结语</h2>
+<p>目前Texmacs还在开发中，用户基数很小，功能上虽说足够，但在windows下运行还有一些卡顿的时候,而且界面也没有其他软件那么美观(另一个说法是界面足够简洁)。</p>
+<p>对现有工具的不满意和懒是折腾的动力，学习使用一个软件也是有成本的，虽说Texmacs是真的好用，但如果对word满意且它足够满足写作需求，也没有折腾的耐心的话，就不必折腾了。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="/tag/pai-ban.html">排版</a>, <a href="/tag/markdown.html">markdown</a>, <a href="/tag/xie-zuo-gong-ju.html">写作工具</a>, <a href="/tag/texmacs.html">Texmacs</a>, <a href="/tag/wen-dang-zhuan-huan.html">文档转换</a>, <a href="/tag/pandoc.html">pandoc</a></p>
+        </div>
+
+    <hr>
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://github.com/Black-Web/">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-visit my github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>. <br />        &copy;  Dawn
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
