@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <title>电磁场基本规律总结</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/github_jekyll.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="电磁场基本规律总结 麦克斯韦方程组和边界条件 理论之源--三大电学实验和麦克斯韦基本假设 三大电学实验：...">
+
+        <meta name="author" content="Dawn">
+
+        <meta name="tags" content="电磁场">
+
+	                <meta property="og:locale" content="">
+		<meta property="og:site_name" content="Dawn's博客">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="/author/dawn.html">
+	<meta property="og:url" content="/summaryofelectricmagnetic.html">
+	<meta property="og:title" content="电磁场基本规律总结">
+	<meta property="article:published_time" content="2019-06-30 00:00:00+08:00">
+            <meta property="og:description" content="电磁场基本规律总结 麦克斯韦方程组和边界条件 理论之源--三大电学实验和麦克斯韦基本假设 三大电学实验：...">
+
+            <meta property="og:image" content="/theme/images/post-bg.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Dawn's博客</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/categories">分类</a></li>
+
+                            <li><a href="/pages/about.html">关于</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/theme/images/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>电磁场基本规律总结</h1>
+                        <span class="meta">Posted by
+                                <a href="/author/dawn.html">Dawn</a>
+                             on 周日 30 六月 2019
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <h1>电磁场基本规律总结</h1>
+<h2>麦克斯韦方程组和边界条件</h2>
+<p><img alt="Maxwell's equation" src="../images/maxwelleqandedgecond.svg"/></p>
+<h2>理论之源--三大电学实验和麦克斯韦基本假设</h2>
+<p>三大电学实验：</p>
+<ul>
+<li>扭秤实验得到的库仑定律：两个点电荷之间的作用力大小与两电荷量乘积成正比，与距离平方成反比。此平方反比规律进一步得出高斯通量定理：电场强度的闭曲面积分只与该闭曲面包围的电荷量有关。</li>
+<li>安培力定律（毕奥-萨伐尔定律）：电流元在某点产生的磁感应强度，与电流在径向的垂直方向上的投影成正比，与距离平方成反比；进一步得出磁场为有旋无源场（磁通连续性原理）。</li>
+<li>法拉第电磁感应定律：感应电动势大小与穿过回路磁通的时间变化率成正比。</li>
+</ul>
+<p>基本假设：</p>
+<ul>
+<li>位移电流：变化的电场同电流一样，是磁场的旋度源；</li>
+<li>有旋电场：变化的磁场是电场的旋度源；</li>
+<li>高斯通量定理和磁通连续性原理在时变条件下也成立。</li>
+</ul>
+<h2>数学基础之梯度、散度和旋度</h2>
+<p><strong>个人理解</strong></p>
+<p>对于正交曲线坐标轴<span class="math">\(u_1,u_2,u_3\)</span>，
+拉梅系数<span class="math">\(H_i\)</span>的几何意义：坐标<span class="math">\(u_i\)</span>变化1单位时，长度变化<span class="math">\(H_i\)</span>个单位。</p>
+<p>梯度：<span class="math">\(u_i\)</span>各自变化1单位时，函数<span class="math">\(f(u_1,u_2,u_3)\)</span>的变化量在该曲面坐标系中的向量描述。</p>
+<p>散度：单位体积内，场在该体积的各个面的通量，对一个向量场求散度即是求其通量源。</p>
+<p>旋度：单位面积内，场沿该面边缘的旋量（闭路积分），对一个向量场求旋度即是求其旋度源。</p>
+<h2>矛盾是理论发展的动力</h2>
+<p>Maxwell把已有规律应用于时变电磁场时出现了矛盾，提出了位移电流的假设。</p>
+<p>曾经在问过高中物理老师，闭合线圈中因磁场变化产生的感应电势中，哪点电位更高？其实再往深处走一点，就可以得出有旋电场的假设，而有旋场无法表示为一个数量场的梯度，也即没有势场，也就没有电位差的概念。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="/tag/dian-ci-chang.html">电磁场</a></p>
+        </div>
+
+    <hr>
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://github.com/Black-Web/">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-visit my github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>. <br />        &copy;  Dawn
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
