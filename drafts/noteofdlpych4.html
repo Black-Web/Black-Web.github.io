@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <title>深度学习笔记(Deep Learning With Python 第四章)</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/github_jekyll.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="训练集、验证集和测试集（train_set, validation_set, test_set） 这几个概念和参数、超参数有关，神经网络训练过程中的参数主要指的是网络的权重矩阵，超参数则是一些与网络结构有关的参数，比如网络层数，训练批数（epoch），甚至激活函数类型。...">
+
+        <meta name="author" content="Dawn">
+
+        <meta name="tags" content="python">
+        <meta name="tags" content="deep-learning">
+
+	                <meta property="og:locale" content="">
+		<meta property="og:site_name" content="Dawn's博客">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="/author/dawn.html">
+	<meta property="og:url" content="/drafts/noteofdlpych4.html">
+	<meta property="og:title" content="深度学习笔记(Deep Learning With Python 第四章)">
+	<meta property="article:published_time" content="2019-02-14 17:56:00+08:00">
+            <meta property="og:description" content="训练集、验证集和测试集（train_set, validation_set, test_set） 这几个概念和参数、超参数有关，神经网络训练过程中的参数主要指的是网络的权重矩阵，超参数则是一些与网络结构有关的参数，比如网络层数，训练批数（epoch），甚至激活函数类型。...">
+
+            <meta property="og:image" content="/theme/images/post-bg.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Dawn's博客</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/categories">分类</a></li>
+
+                            <li><a href="/pages/about.html">关于</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/theme/images/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>深度学习笔记(Deep Learning With Python 第四章)</h1>
+                        <span class="meta">Posted by
+                                <a href="/author/dawn.html">Dawn</a>
+                             on 周四 14 二月 2019
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <h1>训练集、验证集和测试集（train_set, validation_set, test_set）</h1>
+<p>这几个概念和<code>参数</code>、<code>超参数</code>有关，神经网络训练过程中的参数主要指的是网络的权重矩阵，超参数则是一些与网络结构有关的参数，比如网络层数，训练批数（epoch），甚至激活函数类型。</p>
+<p>训练集用来对<code>参数</code>进行调整；验证集用来对<code>超参数</code>进行tuning，通常后者需要人工进行（当然也可以写一个嵌套程序自动化完成）；测试集则用来测试模型在<strong>从未见过的数据上的表现</strong>。本质上说，除测试集以外的数据（即训练集和验证集）都是用以训练模型的数据。</p>
+<p>当数据量较少时，划分出来的训练集和验证集可能导致训练结果受划分方式的影响（换句话说训练集数据没有代表性），如果没有更多数据可用，解决方法之一是使用K-fold交叉验证。</p>
+<p>K-fold：</p>
+<ul>
+<li>训练集数据必须足够有代表性，一个训练集不具代表性的例子是：在一个识别包含0-9字符的图像的任务中，如果划分的训练集不含字符“8”，而在测试集中包含“8”，那么这就是一个糟糕的划分，训练集数据不包含整体数据集的全部特征，因而神经网络也就没法对全部特征作出区分。</li>
+<li>但对于预测任务，即给出历史数据预测未来变化的任务，<strong>不能</strong>把数据随意打乱，即不能用带有未来信息的数据去训练模型。</li>
+<li>数据冗余，确保在训练集和测试集上不包含重复的样本。</li>
+</ul>
+<h1>欠拟合与过拟合（underfitting and overfitting）</h1>
+<p>过拟合是指模型在训练集上表现很好，而在验证集上表现糟糕。欠拟合与之相反。解决过拟合的方式有：</p>
+<ul>
+<li>减小模型容量，即减小模型层数或每层神经元数量。通常大容量的模型容易导致过拟合。</li>
+<li>加入权重正则化（weight regularization），可以理解为惩罚机制，在loss_function中加入一项与权重数值相关的额外损失，以此限制权重的取值，具体来讲又有：</li>
+<li>L1正则化：额外损失正比于权重的绝对值。</li>
+<li>L2正则化：额外损失正比于权重的平方，也称权重衰减（weight decay）。</li>
+<li>加入drop-out层，在训练期间随机使部分神经元的输出为0（失活），有点像负重训练的意思。</li>
+</ul>
+<blockquote>
+<p>Using machine learning trained on past data to predict the future is making the assumption that the future will behave like the past. That often isn’t the case.</p>
+</blockquote>
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="/tag/python.html">python</a>, <a href="/tag/deep-learning.html">deep-learning</a></p>
+        </div>
+
+    <hr>
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://github.com/Black-Web/">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-visit my github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>. <br />        &copy;  Dawn
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

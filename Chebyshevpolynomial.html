@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-        <title>把椭圆扶正</title>
+        <title>Chebyshev多项式</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -33,23 +33,25 @@
 
 
 
-        <meta name="description" content="把椭圆扶正 最近遇到两个相互垂直的简谐运动叠加的问题，运用线性代数坐标变换可以完美解决。 画一个椭圆 -- 互相垂直的同频振荡 设想有一个小球同时在x,y两个方向上运动，并且x,y方向上的位移满足参数方程：...">
+        <meta name="description" content="Chebyshev多项式的定义 对于自然数n，定义自变量为\(x\)，\(x\epsilon[-1,1]\) 的n阶切比雪夫多项式如下： $$T_n(x) = cos(n \cdot cos^{-1}(x))$$...">
 
         <meta name="author" content="Dawn">
 
-        <meta name="tags" content="解析几何">
-        <meta name="tags" content="偏振">
-        <meta name="tags" content="椭圆">
+        <meta name="tags" content="数值分析">
+        <meta name="tags" content="函数逼近">
+        <meta name="tags" content="拟合误差">
+        <meta name="tags" content="多项式">
+        <meta name="tags" content="切比雪夫多项式">
 
 	                <meta property="og:locale" content="">
 		<meta property="og:site_name" content="Dawn's博客">
 
 	<meta property="og:type" content="article">
             <meta property="article:author" content="/author/dawn.html">
-	<meta property="og:url" content="/rectifytheellipse.html">
-	<meta property="og:title" content="把椭圆扶正">
-	<meta property="article:published_time" content="2019-03-28 00:00:00+08:00">
-            <meta property="og:description" content="把椭圆扶正 最近遇到两个相互垂直的简谐运动叠加的问题，运用线性代数坐标变换可以完美解决。 画一个椭圆 -- 互相垂直的同频振荡 设想有一个小球同时在x,y两个方向上运动，并且x,y方向上的位移满足参数方程：...">
+	<meta property="og:url" content="/Chebyshevpolynomial.html">
+	<meta property="og:title" content="Chebyshev多项式">
+	<meta property="article:published_time" content="2019-08-26 00:00:00+08:00">
+            <meta property="og:description" content="Chebyshev多项式的定义 对于自然数n，定义自变量为\(x\)，\(x\epsilon[-1,1]\) 的n阶切比雪夫多项式如下： $$T_n(x) = cos(n \cdot cos^{-1}(x))$$...">
 
             <meta property="og:image" content="/theme/images/post-bg.jpg">
 </head>
@@ -89,10 +91,10 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <h1>把椭圆扶正</h1>
+                        <h1>Chebyshev多项式</h1>
                         <span class="meta">Posted by
                                 <a href="/author/dawn.html">Dawn</a>
-                             on 周四 28 三月 2019
+                             on 周一 26 八月 2019
                         </span>
                         
                     </div>
@@ -107,53 +109,53 @@
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
     <!-- Post Content -->
     <article>
-        <h1>把椭圆扶正</h1>
-<p>最近遇到两个相互垂直的简谐运动叠加的问题，运用线性代数坐标变换可以<s>完美</s>解决。</p>
-<h2>画一个椭圆 -- 互相垂直的同频振荡</h2>
-<p>设想有一个小球同时在x,y两个方向上运动，并且x,y方向上的位移满足参数方程：</p>
-<div class="math">$$\begin{aligned}x&amp;=A_1\cos(\omega t+\delta_1)\\&amp;=A_1(\cos\omega t \cos\delta_1-\sin\omega t\sin\delta_1)\tag{1}\end{aligned}$$</div>
-<div class="math">$$\begin{aligned}y&amp;=A_2\cos(\omega t+\delta_2)\\&amp;=A_2(\cos\omega t \cos\delta_2-\sin\omega t\sin\delta_2)\tag{2}\end{aligned}$$</div>
-<p>那么这个小球的运动轨迹是怎样的呢？为了回答这个问题，从以上两式中消去时间变量<span class="math">\(t\)</span>：</p>
-<p><span class="math">\((1)\div A_1\times \cos\delta_2\)</span>得到：</p>
-<div class="math">$$ \frac{x}{A_1}\cos\delta_2=\cos\omega t\cos\delta_1\cos\delta_2-\sin\omega t\sin\delta_1\cos\delta_2 
-\tag{3}
-$$</div>
-<p><span class="math">\((2)\div A_2\times \cos\delta_1\)</span>得到：</p>
-<div class="math">$$ \frac{y}{A_2}\cos\delta_1=\cos\omega t\cos\delta_2\cos\delta_1-\sin\omega t\sin\delta_2\cos\delta_1
-\tag{4}
-$$</div>
-<p>
-<span class="math">\((3)-(4)\)</span>：
+        <h1>Chebyshev多项式的定义</h1>
+<p>对于自然数n，定义自变量为<span class="math">\(x\)</span>，<span class="math">\(x\epsilon[-1,1]\)</span> 的n阶切比雪夫多项式如下：
 </p>
-<div class="math">$$\frac{x}{A_1}\cos\delta_2-\frac{y}{A_2}\cos\delta_1=\sin\omega t \sin(\delta_2-\delta_1)
-\tag{5}
-$$</div>
-<p>同理，交错乘以<span class="math">\(\sin\delta_2\)</span>和<span class="math">\(\sin\delta_1\)</span>并相减后得到：</p>
-<div class="math">$$\frac{x}{A_1}\sin\delta_2-\frac{y}{A_2}\sin\delta_1=\cos\omega t \sin(\delta_2-\delta_1)
-\tag{6}
-$$</div>
-<p>
-再将<span class="math">\((5)、(6)\)</span>式平方相加，化简后得到：
+<div class="math">$$T_n(x) = cos(n \cdot cos^{-1}(x))$$</div>
+<p><strong>初看起来这不像是多项式</strong>，需要经过一些代数变换，在此之前，先看看它的前几项。</p>
+<div class="math">$$\begin{aligned}
+T_0(x) &amp;= 1\\
+T_1(x) &amp;= x\\
+T_2(x) &amp;= 2x^2-1
+\end{aligned}$$</div>
+<p>上面第三行<span class="math">\(T_2\)</span>的推导用了二倍角公式；对于更高阶的<span class="math">\(T_n\)</span>继续使用倍角公式会很不明智，合适的方法是递推。先令<span class="math">\(t=cos^{-1}(x)\)</span>，那么，
 </p>
-<div class="math">$$ \frac{x^2}{A_1^2}+\frac{y^2}{A_2^2}-2\frac{xy}{A_1A_2}\cos(\delta_2-\delta_1)=\sin^2(\delta_2-\delta_1) \tag{7}$$</div>
-<p>
-这便得到了消去时间变量后的曲线方程，它是一个关于<span class="math">\(x\)</span>、<span class="math">\(y\)</span>的二次曲线，在<span class="math">\(\delta_2\ne\delta_1\)</span>时可能有抛物线、双曲线、椭圆三种情况，观察式<span class="math">\((1)\)</span>、<span class="math">\((2)\)</span>可知<span class="math">\(x\)</span>、<span class="math">\(y\)</span>均不会到无穷大，可以断定是椭圆，中心在原点。并且，如果<span class="math">\(\delta_2-\delta_1\ne k\cdot\frac{\pi}{2}\)</span>，这个椭圆的对称轴不会落在坐标轴上，是一个斜着的椭圆。</p>
-<h2>坐标轴旋转</h2>
-<p>接下来的问题是，这个椭圆的倾斜角是怎样的？</p>
-<p>可以选择适当的坐标旋转变换，使椭圆在新坐标系下关于坐标轴对称，从方程上看，是要使变换后的xy交叉项消掉，关于坐标变换的总结，<a href="/linearalgebraandaxistransform.html">另有成文</a>。这里直接给出旋转角<span class="math">\(\alpha\)</span>应满足的关系：</p>
-<div class="math">$$ \tan2\alpha = \frac{2A_1A_2}{A_1^2A_2^2}\cos(\delta_2 -\delta_1)\tag{8}$$</div>
-<p>可以猜测根据此关系式能得到4个满足条件的<span class="math">\(\alpha\)</span>，且互差<span class="math">\(\frac{\pi}{2}\)</span>。</p>
-<h2>特征值与轴长的关系</h2>
-<p>那么椭圆的长半轴、短半轴又是多少？</p>
-<p>至少有两种求解方法，一是利用上面得到的旋转角度，写出新坐标系下的椭圆方程得到；二是直接使用拉格朗日乘子法求解函数<span class="math">\(x^2+y^2\)</span>的最值。第二种方法运算量也许小些。</p>
-<p>这里使用实对称矩阵的特征值法解决。</p>
-<p>式<span class="math">\((7)\)</span>是一个二次型，令<span class="math">\(\Delta=\delta_2 -\delta_1\)</span>，该二次型矩阵为：</p>
-<div class="math">$$ \textbf{A}=\left[\begin{matrix}\frac{1}{A_{1}^{2} \sin^{2}{\left (\Delta \right )}} &amp; - \frac{\cos{\left (\Delta \right )}}{A_{1} A_{2} \sin^{2}{\left (\Delta \right )}}\\- \frac{\cos{\left (\Delta \right )}}{A_{1} A_{2} \sin^{2}{\left (\Delta \right )}} &amp; \frac{1}{A_{2}^{2} \sin^{2}{\left (\Delta \right )}}\end{matrix}\right] \tag{9}$$</div>
-<p>由线性代数理论知道，存在正交变换<span class="math">\([x,y]^T=\textbf{P} \cdot [X,Y]^T\)</span>，使二次型化为标准型，设特征值为<span class="math">\(\lambda_1\)</span>、<span class="math">\(\lambda_2\)</span>，则该变换使方程化为<span class="math">\(\lambda_1X^2+\lambda_2Y^2=1\)</span>，容易知道长半轴和短半轴为<span class="math">\(\frac{1}{\sqrt{\lambda_1}}\)</span>、<span class="math">\(\frac{1}{\sqrt{\lambda_2}}\)</span>。其形式略显复杂。</p>
-<p>这种方法运算量也不小。</p>
-<p>如果反过来要求在已知长短半轴和椭圆倾斜角的情况下，求两个方向上的简谐运动参数，使用以上方法将异常复杂。</p>
-<h2>小结</h2>
-<p>执意使用笛卡尔坐标系的代价是运算量大和表达式形式复杂，并且消去时间变量后无法得知小球旋转的方向。需要变通。</p>
+<div class="math">$$T_{n+1} = cos(nt)cos(t)-sin(nt)sin(t)\\T_{n-1} = cos(nt)cos(t)+sin(nt)sin(t)$$</div>
+<p>两式相加，注意到<span class="math">\(x=cos(t)\)</span>、<span class="math">\(T_n=cos(nt)\)</span></p>
+<div class="math">$$T_{n+1}+T_{n-1}=2cos(nt)cos(t)=2xT_n $$</div>
+<p>移项写成：
+</p>
+<div class="math">$$T_{n+1}=2xT_n-T_{n-1}$$</div>
+<p><strong>从这个递推关系式和首项<span class="math">\(T_0\)</span>、<span class="math">\(T_1\)</span>知道，<span class="math">\(T_n\)</span>是n次多项式</strong>。因此切比雪夫多项式也可以由这个递推式和两个首项直接定义得到。</p>
+<h1>性质</h1>
+<ol>
+<li>
+<p><span class="math">\(T_n(1) = 1\)</span>，<span class="math">\(T_n(-1) = (-1)^n\)</span>.
+直接带入定义式即可得到。或者用递推式归纳法证明。</p>
+</li>
+<li>
+<p><span class="math">\(|T_n|\le1\)</span>.且极值点为<span class="math">\(x=cos\frac{k\pi}{n},k=0,1,2...n\)</span>.且极值是<span class="math">\(\pm1\)</span>交替出现的。
+实数域内直接求解方程<span class="math">\(cos(n \cdot cos^{-1}(x))=\pm1\)</span>得到。</p>
+</li>
+<li>
+<p><span class="math">\(T_n\)</span>共有n个零点，分别为<span class="math">\(x=cos\frac{(2k-1)\pi}{2n},k=1,2,3...n\)</span>.
+实数域内直接求解方程<span class="math">\(n \cdot cos^{-1}(x)=\frac{(2k-1)\pi}{2}\)</span>得到。</p>
+</li>
+<li>
+<p><span class="math">\(T_n\)</span>的最高次项系数为<span class="math">\(2^{n-1}\)</span>.
+可根据递推式归纳证明。</p>
+</li>
+</ol>
+<p>从2、3可以看到，将单位圆的上半周平均分为2n份，在包括0和<span class="math">\(\pi\)</span>在内的2n+1个分界点对应的横坐标处，依次出现<span class="math">\(T_n\)</span>的极值点和零点。其中n+1个极值点为1和-1交替出现。</p>
+<h1>应用</h1>
+<p>在分析用多项式拟合目标函数<span class="math">\(f(x)\)</span>的误差时，需要分析形如<span class="math">\(Error = \frac{f^{(n)}(c)}{n!}(x-x_1)(x-x_2)\dots(x-x_n)\)</span>的多项式，使最大误差最小化。<span class="math">\(Error\)</span>是<span class="math">\(x_i,i=1,2...n\)</span>的函数。</p>
+<p>系数<span class="math">\(\frac{f^{(n)}(c)}{n!}\)</span>视作常数暂不予考虑，那么问题变为n固定时，<strong>如何选取指定区间内的一系列<span class="math">\(x_i\)</span>，使得多项式的绝对值<span class="math">\(|P|=|(x-x_1)(x-x_2)\dots(x-x_n)|\)</span>的最大值最小</strong>？实际上，对于<span class="math">\(x\epsilon[-1,1]\)</span>，这个问题的答案即是由上述性质3指出的<span class="math">\(T_n\)</span>的n个零点，在此基础上作区间缩放和平移即可应用到任意区间。这些零点称为<em>切比雪夫插值结点</em>。</p>
+<p>对于区间<span class="math">\(x\epsilon[-1,1]\)</span>的证明如下：</p>
+<p>反证法。设<span class="math">\(Q\)</span>为任意一个不按切比雪夫结点插值的最高次项项系数为1的多项式，且<span class="math">\(max{|Q|}&lt;max{|P|}\)</span>。首先，<span class="math">\(P-Q\)</span>的阶数<span class="math">\(\le n-1\)</span>，因此<span class="math">\(P-Q\)</span>至多有<span class="math">\(n-1\)</span>个零点；其次，因为假设<span class="math">\(max{|Q|}&lt;max{|P|}\)</span>，那么在<span class="math">\(P\)</span>上叠加一个额外项<span class="math">\(-Q\)</span>不会使<span class="math">\(P\)</span>的负极值点变为正，也不会使正极值点变为负，那么的<span class="math">\(P-Q\)</span>仍同<span class="math">\(P\)</span>一样有<span class="math">\(n\)</span>个零点。因此假设不成立。</p>
+<h1>总结</h1>
+<p>如何选取一系列插值点<span class="math">\(x_i\)</span>的问题，看起来毫无头绪，证明也是有点已知结果去验证的味道。印象中切比雪夫不等式也是这种感觉，难以通过正面的演绎推理得到答案。</p>
+<p>先猜结果后验证也是一条解决问题的方法。</p>
 <script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
     var align = "center",
         indent = "0em",
@@ -212,7 +214,7 @@ $$</div>
     </article>
 
         <div class="tags">
-            <p>tags: <a href="/tag/jie-xi-ji-he.html">解析几何</a>, <a href="/tag/pian-zhen.html">偏振</a>, <a href="/tag/tuo-yuan.html">椭圆</a></p>
+            <p>tags: <a href="/tag/shu-zhi-fen-xi.html">数值分析</a>, <a href="/tag/han-shu-bi-jin.html">函数逼近</a>, <a href="/tag/ni-he-wu-chai.html">拟合误差</a>, <a href="/tag/duo-xiang-shi.html">多项式</a>, <a href="/tag/qie-bi-xue-fu-duo-xiang-shi.html">切比雪夫多项式</a></p>
         </div>
 
     <hr>
