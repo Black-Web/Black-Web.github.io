@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+            <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+        <title>从插值、拟合到离散傅里叶变换与深度学习</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="/theme/css/clean-blog.min.css" rel="stylesheet">
+
+        <!-- Code highlight color scheme -->
+            <link href="/theme/css/code_blocks/github_jekyll.css" rel="stylesheet">
+
+
+        <!-- Custom Fonts -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+
+        <meta name="description" content="从插值、拟合到离散傅里叶变换与深度学习 有\(N\)个采样数据点\(( t_i , x_i ),i = 0,1,2,\cdots,N-1\)，任意两个\(t_i\)不相同；假设有一\(p\)阶多项式恰好经过全部点，即有\(p+1\)个系数\(c_k\)，使得多项式 $$...">
+
+        <meta name="author" content="Dawn">
+
+        <meta name="tags" content="插值">
+        <meta name="tags" content="拟合">
+        <meta name="tags" content="傅里叶变换">
+        <meta name="tags" content="多项式">
+        <meta name="tags" content="基函数">
+
+	                <meta property="og:locale" content="">
+		<meta property="og:site_name" content="Dawn's博客">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="/author/dawn.html">
+	<meta property="og:url" content="/interpAndfit.html">
+	<meta property="og:title" content="从插值、拟合到离散傅里叶变换与深度学习">
+	<meta property="article:published_time" content="2020-04-19 00:00:00+08:00">
+            <meta property="og:description" content="从插值、拟合到离散傅里叶变换与深度学习 有\(N\)个采样数据点\(( t_i , x_i ),i = 0,1,2,\cdots,N-1\)，任意两个\(t_i\)不相同；假设有一\(p\)阶多项式恰好经过全部点，即有\(p+1\)个系数\(c_k\)，使得多项式 $$...">
+
+            <meta property="og:image" content="/theme/images/post-bg.jpg">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Dawn's博客</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/categories">分类</a></li>
+
+                            <li><a href="/pages/about.html">关于</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+        <header class="intro-header" style="background-image: url('/theme/images/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1>从插值、拟合到离散傅里叶变换与深度学习</h1>
+                        <span class="meta">Posted by
+                                <a href="/author/dawn.html">Dawn</a>
+                             on 周日 19 四月 2020
+                        </span>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+    <!-- Post Content -->
+    <article>
+        <h1>从插值、拟合到离散傅里叶变换与深度学习</h1>
+<p>有<span class="math">\(N\)</span>个采样数据点<span class="math">\(( t_i , x_i ),i = 0,1,2,\cdots,N-1\)</span>，任意两个<span class="math">\(t_i\)</span>不相同；假设有一<span class="math">\(p\)</span>阶多项式恰好经过全部点，即有<span class="math">\(p+1\)</span>个系数<span class="math">\(c_k\)</span>，使得多项式</p>
+<div class="math">$$ P(t)=\sum_{k=0}^p c_k t^k $$</div>
+<p>满足<span class="math">\(P(t_i)=x_i\)</span>。据此能够列写<span class="math">\(N\)</span>个线性无关的方程。</p>
+<ol>
+<li>
+<p>当<span class="math">\(p+1=N\)</span>时，未知数个数与能列方程数相同，总存在唯一一组<span class="math">\(c_k\)</span>。</p>
+</li>
+<li>
+<p>当<span class="math">\(p+1&gt;N\)</span>时，拟合多项式的阶数比数据点数还多，可以获得无穷多组<span class="math">\(c_k\)</span>。</p>
+</li>
+</ol>
+<p>定义均方误差</p>
+<div class="math">$$ MSE = \frac{1}{N}\sqrt{ \sum_{i=0}^{N-1} ( P ( t_i )- x_i )^2 }$$</div>
+<p>以上两种情况，<span class="math">\(MSE\)</span>恰好为0，所得的多项式<span class="math">\(P(t)\)</span>进过所有数据点，数据点之间未被采样的值也可以通过这个多项式来估算(估算的准确程度是另外一回事)，因此称之为插值。</p>
+<ol>
+<li>当 <span class="math">\( p+1&lt;N $ 时，可能得到一组无解的方程组，退一步，不再保证\)</span>P(t_i)=x_i<span class="math">\( ，而是变为使得\)</span>MSE<span class="math">\(尽可能小，这可以通过求矩阵伪逆来求得最小二乘解；此时便是拟合，总有 $MSE &gt; 0\)</span>。</li>
+</ol>
+<p>以上讨论的多项式拟合，<span class="math">\(\{1,t,t^2,...,t^n\}\)</span>称为基函数，当使用三角函数作为基函数时，便成为三角插值/拟合。下面进行形式上一般化的讨论。</p>
+<h2>插值与拟合问题的矩阵描述</h2>
+<p>用一组基函数<span class="math">\(\phi_i(t),i = 0,1,2,...,p\)</span>去拟合<span class="math">\(N\)</span>个数据点<span class="math">\(( t_i , x_i ),i = 0,1,2,\cdots,N-1\)</span>，即</p>
+<div class="math">$$ \Phi(t)=\sum_{k=0}^p c_k \phi_i(t) \tag{1}$$</div>
+<p>根据<span class="math">\(\Phi(t_i)=x_i\)</span>，得到<span class="math">\(n\)</span>个方程，写成矩阵如下：</p>
+<div class="math">$$ \left[ \begin{array}{ccc}
+     \phi_0 (t_0) &amp; \cdots &amp; \phi_p (t_0)\\
+     \vdots &amp; \ddots &amp; \vdots\\
+     \phi_0 (t_{N-1}) &amp; \cdots &amp; \phi_p (t_{N-1})
+   \end{array} \right] \left[ \begin{array}{l}
+     c_0\\
+     \vdots\\
+     c_p
+   \end{array} \right] = \left[ \begin{array}{l}
+     x_0\\
+     \vdots\\
+     x_{N-1}
+   \end{array} \right]
+   \tag{2}
+$$</div>
+<p>对上式左边的<span class="math">\(N * p+1\)</span>阶矩阵求取左逆（比如M-P伪逆），便可以得到组合系数<span class="math">\(c_k\)</span>。</p>
+<h3>离散傅里叶变换 -- 基函数是三角函数的情况</h3>
+<p>先说明要得到的三角插值表达式：</p>
+<div class="math">$$\Phi(t)=\sum_{k=0}^{N-1}c_k e^{jk\omega (t-t_0)}\tag{3}$$</div>
+<p>其中<span class="math">\(c_k\)</span>表示<span class="math">\(k\)</span>次谐波的系数，而<span class="math">\(j\)</span>是复单位（<span class="math">\(j^2=-1\)</span>）。</p>
+<p>一个实践中容易做到（也经常这么做）的是，采样点是等间隔的，令这个间隔为<span class="math">\(\Delta t\)</span>，那么<span class="math">\(t_i=t_0+i\Delta t,i\epsilon\{0,1,2\dots n-1\}\)</span>。基波频率为<span class="math">\(\omega=\frac{2\pi}{N\Delta t}\)</span>。在采样点之间的值可以通过把<span class="math">\(t\)</span>代入插值公式估算，而为了求出各次系数，把<span class="math">\(t_i=t_0+i\Delta t\)</span>及<span class="math">\(\omega\)</span>代入(3)得到：</p>
+<div class="math">$$x_i=\Phi(t_i)=\sum_{k=0}^{N-1}c_k e^{jk\frac{2\pi i\Delta t}{N\Delta t}}=\sum_{k=0}^{N-1}c_k e^{jki(2\pi/N)}\tag{4}$$</div>
+<p>令基函数为复指数函数：</p>
+<div class="math">$$\phi_k(t_i)=e^{jki(2\pi/N)}\tag{5}$$</div>
+<p>(1)式中令<span class="math">\(p=N-1\)</span>，展开写，即离散傅里叶级数的复数形式：</p>
+<div class="math">$$\Phi(t)=c_0\phi_0(t)+c_1\phi_1(t)+\cdots+c_{N-1}\phi_{N-1}(t)$$</div>
+<p><strong>为什么令<span class="math">\(p=N-1\)</span>？因为从(3)式可以得到<span class="math">\(\phi_k(t)=\phi_{k+N}(t)\)</span>，<span class="math">\(\phi_{k+N}\)</span>的系数总可以与更低次谐波的系数合并，从而取更大的<span class="math">\(p\)</span>会造成冗余。</strong></p>
+<p>两个关注点：</p>
+<ol>
+<li>从(3)到(4)，自变量从连续的<span class="math">\(t\)</span>变成离散的<span class="math">\(i\)</span>，这是代入已知数据的结果;</li>
+<li><span class="math">\(\phi_k(t_i)=(\phi_1(t_1))^{ki}\)</span>，并且<span class="math">\(\phi_1(t_1)\)</span>是方程<span class="math">\(z^N=1\)</span>的根，可以将它画在复平面单位圆上。</li>
+</ol>
+<p>代入各数据点后(2)式和(4)式是等同的，区别只在于(2)是矩阵形式，记这个系数矩阵为<span class="math">\(G\)</span>，容易观察到它是对称矩阵。</p>
+<p><span class="math">\(G\)</span>矩阵有着良好的性质：将它除以<span class="math">\(\sqrt N\)</span>后是一个酉矩阵，即</p>
+<div class="math">$$(\frac{1}{\sqrt N} G)^{-1}=(\frac{1}{\sqrt N} G)^H$$</div>
+<p>可以验证<span class="math">\(G^HG=NI\)</span>。这样一来求系数就可以通过矩阵相乘来实现：</p>
+<div class="math">$$ \left[ \begin{array}{l}
+     c_0\\
+     \vdots\\
+     c_{N-1}
+   \end{array} \right] = \frac{1}{N}
+   \left[ \begin{array}{ccc}
+     \phi_0 (t_0) &amp; \cdots &amp; \phi_p (t_0)\\
+     \vdots &amp; \ddots &amp; \vdots\\
+     \phi_0 (t_{N-1}) &amp; \cdots &amp; \phi_p (t_{N-1})
+   \end{array} \right]^H \left[ \begin{array}{l}
+     x_0\\
+     \vdots\\
+     x_{N-1}
+   \end{array} \right]
+   \tag{6}
+$$</div>
+<p>对于基函数为前述多项式的情况，矩阵求逆需要一定的计算量，但是如果基函数是复数形式的三角函数，那么系数矩阵具有良好的性质，其逆等于其共轭转置。</p>
+<h3>FFT -- 通过避免重复运算来加速</h3>
+<p>快速傅里叶变换利用<span class="math">\(\phi_k\)</span>的周期性，把高次分量的计算归约到低次分量，从而使大量运算合并，避免重复运算。</p>
+<h2>深度学习 -- 数值优化的视角</h2>
+<p>换一个思路，不通过求逆的方法解方程，而是使用优化算法来最小化<span class="math">\(MSE\)</span>，也可以求出系数得到拟合函数，这在系数是非线项时，就变为了非线性函数的数值优化问题。进一步，如果优化的目标函数不是<span class="math">\(MSE\)</span>，那么就步入了深度学习的范围，借助深度学习中计算图的概念，可以较清楚地了解优化过程及优化算法。</p>
+<p>计算图是分布式的，不容易像FFT那样进行运算的合并。</p>
+<h1>小结</h1>
+<p>这篇文章写了很久，把插值和拟合问题通过(2)式统一地描述出来，并以此讨论离散傅里叶变换的矩阵形式。关于FFT和深度学习这部分只是简略带过，以指明知识之间的关联。在多项式拟合中也可以构建出一系列的正交基函数（如Legendre多项式），这样也许能够获得类似三角插值那样性质比较优良的矩阵。</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'inherit ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="/tag/cha-zhi.html">插值</a>, <a href="/tag/ni-he.html">拟合</a>, <a href="/tag/fu-li-xie-bian-huan.html">傅里叶变换</a>, <a href="/tag/duo-xiang-shi.html">多项式</a>, <a href="/tag/ji-han-shu.html">基函数</a></p>
+        </div>
+
+    <hr>
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                            <li>
+                                <a href="https://github.com/Black-Web/">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-visit my github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                    </ul>
+<p class="copyright text-muted">
+    Blog powered by <a href="http://getpelican.com">Pelican</a>,
+    which takes great advantage of <a href="http://python.org">Python</a>. <br />        &copy;  Dawn
+</p>                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="/theme/js/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="/theme/js/clean-blog.min.js"></script>
+
+</body>
+
+</html>
