@@ -136,7 +136,7 @@ A\cdot \overrightarrow{x}&amp;=B\cdot\overrightarrow{y}\\
 <p><strong>上面的说法太抽象了，来点具体的。</strong></p>
 <h2>具象化的例子</h2>
 <p>看一个二维的情况。</p>
-<p><img alt="坐标变换的例子" src="./images/axistransform.svg"></p>
+<p><img alt="坐标变换的例子" src="./images/axistransform.svg"/></p>
 <p>如上图所示，原坐标系的两个基向量为<span class="math">\(\overrightarrow{x_1}\)</span>、<span class="math">\(\overrightarrow{x_2}\)</span>，把它们正向旋转<span class="math">\(\pi/4\)</span>角度后得到两个新的向量<span class="math">\(\overrightarrow{y_1}\)</span>、<span class="math">\(\overrightarrow{y_2}\)</span>，新向量构成新坐标系的基底，记原坐标系为<span class="math">\(x\)</span>坐标系，新坐标系为<span class="math">\(y\)</span>坐标系（之所以不使用惯用的<span class="math">\((x,y)\)</span>来描述平面点，是为了向高维推广）。</p>
 <p>根据图示及以上结论，把<span class="math">\(y\)</span>坐标系的基向量在<span class="math">\(x\)</span>坐标系下的坐标依序排列，可写出从<span class="math">\(x\)</span>坐标系到<span class="math">\(y\)</span>坐标系的过渡矩阵为：</p>
 <div class="math">$$P=\begin{bmatrix}
@@ -164,17 +164,17 @@ A\cdot \overrightarrow{x}&amp;=B\cdot\overrightarrow{y}\\
 <li>过渡矩阵左乘新坐标系下的坐标得到同一点在原坐标系下的坐标描述。</li>
 </ul>
 <h2>再扯远一点 -- 谈谈惯例的事</h2>
-<p>小结中的两条结论是在<code>列向量惯例</code><sup id="fnref:fn"><a class="footnote-ref" href="#fn:fn">1</a></sup>下得到的，如果采用<code>行向量惯例</code>，那么结论中的<em>左乘</em>和<em>右乘</em>应互相调换。</p>
+<p>小结中的两条结论是在<code>列向量惯例</code><sup id="fnref:fn"><a class="footnote-ref" href="#fn:fn" rel="footnote">1</a></sup>下得到的，如果采用<code>行向量惯例</code>，那么结论中的<em>左乘</em>和<em>右乘</em>应互相调换。</p>
 <p>那么我们为什么又习惯采用<code>列向量惯例</code>呢，一种可能的原因是写成列向量：</p>
 <div class="math">$$\begin{bmatrix}
     x_1\\x_2\\x_3\\.\\.\\.
 \end{bmatrix}$$</div>
 <p>更占空间，看起来篇幅更长（手动划掉）。</p>
 <div class="footnote">
-<hr>
+<hr/>
 <ol>
 <li id="fn:fn">
-<p>指把向量写成一列的习惯。&#160;<a class="footnote-backref" href="#fnref:fn" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>指把向量写成一列的习惯。 <a class="footnote-backref" href="#fnref:fn" rev="footnote" title="Jump back to footnote 1 in the text">↩</a></p>
 </li>
 </ol>
 </div>

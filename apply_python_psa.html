@@ -116,37 +116,29 @@
 <li><a href="https://github.com/rwl/PYPOWER">PYPOWER</a> -- 这是一个matlab下matpower的Python移植，还有一个基于它的系统暂态稳定性仿真程序<a href="https://github.com/susantoj/PYPOWER-Dynamics">PYPOWER-Dynamics</a></li>
 <li><a href="https://github.com/SanPen/GridCal">GridCal</a> -- 带有图形界面的电力系统分析软件，画面很赞。看下面项目主页的示例图：</li>
 </ul>
-<p><img alt="GridCal示例图" src="https://raw.githubusercontent.com/SanPen/GridCal/master/pics/GridCal.png">
-* <a href="https://github.com/bdw/GridKit">GridKit</a> -- 由德国的一个SciGRID项目产生，但这个就不是纯粹用Python写成的了。
-* 还有一个国内的<a href="https://github.com/Maples7/PowerFlowCalculation">PowerFlowCalculation</a></p>
+<p><img alt="GridCal示例图" src="https://raw.githubusercontent.com/SanPen/GridCal/master/pics/GridCal.png"/>
+<em> <a href="https://github.com/bdw/GridKit">GridKit</a> -- 由德国的一个SciGRID项目产生，但这个就不是纯粹用Python写成的了。
+</em> 还有一个国内的<a href="https://github.com/Maples7/PowerFlowCalculation">PowerFlowCalculation</a></p>
 <p>可以看到在目前Dawn所收集到的信息里，有两个都是德国的，德国的电力工业也的确发达。</p>
 <h2>用PyPSA进行潮流计算</h2>
 <p>本文主要介绍PyPSA的使用，以何的教材<code>例题11-5</code>作为算例，用Newton-Raphson法进行潮流计算。</p>
 <p>在开始前需导入以下包。</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">pypsa</span> <span class="k">as</span> <span class="nn">psa</span>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">pypsa</span> <span class="kn">as</span> <span class="nn">psa</span>
 </pre></div>
-
-
 <h3>初始化网络</h3>
-<div class="highlight"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">psa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;simple_net&#39;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">psa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'simple_net'</span><span class="p">)</span>
 </pre></div>
-
-
 <p>首先创建一个网络，命名为<code>simple_net</code>，当然也可以为complex net，名字开心就好。下面用一个循环加入4条母线：</p>
 <div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
-    <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Bus&#39;</span><span class="p">,</span><span class="s1">&#39;Bus </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Bus'</span><span class="p">,</span><span class="s1">'Bus {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 </pre></div>
-
-
 <p>然后可以查看各母线的有关参数，对这些参数的详细解释请参考官方文档，这里我们只关心<code>control</code>一栏。</p>
 <div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">buses</span>
 </pre></div>
-
-
 <div>
-<style scoped>
+<style scoped="">
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -159,79 +151,78 @@
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>attribute</th>
-      <th>v_nom</th>
-      <th>type</th>
-      <th>x</th>
-      <th>y</th>
-      <th>carrier</th>
-      <th>v_mag_pu_set</th>
-      <th>v_mag_pu_min</th>
-      <th>v_mag_pu_max</th>
-      <th>control</th>
-      <th>sub_network</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Bus 1</th>
-      <td>1.0</td>
-      <td></td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>AC</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>inf</td>
-      <td>PQ</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Bus 2</th>
-      <td>1.0</td>
-      <td></td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>AC</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>inf</td>
-      <td>PQ</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Bus 3</th>
-      <td>1.0</td>
-      <td></td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>AC</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>inf</td>
-      <td>PQ</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Bus 4</th>
-      <td>1.0</td>
-      <td></td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>AC</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>inf</td>
-      <td>PQ</td>
-      <td></td>
-    </tr>
-  </tbody>
+<table class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th>attribute</th>
+<th>v_nom</th>
+<th>type</th>
+<th>x</th>
+<th>y</th>
+<th>carrier</th>
+<th>v_mag_pu_set</th>
+<th>v_mag_pu_min</th>
+<th>v_mag_pu_max</th>
+<th>control</th>
+<th>sub_network</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Bus 1</th>
+<td>1.0</td>
+<td></td>
+<td>0.0</td>
+<td>0.0</td>
+<td>AC</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>inf</td>
+<td>PQ</td>
+<td></td>
+</tr>
+<tr>
+<th>Bus 2</th>
+<td>1.0</td>
+<td></td>
+<td>0.0</td>
+<td>0.0</td>
+<td>AC</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>inf</td>
+<td>PQ</td>
+<td></td>
+</tr>
+<tr>
+<th>Bus 3</th>
+<td>1.0</td>
+<td></td>
+<td>0.0</td>
+<td>0.0</td>
+<td>AC</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>inf</td>
+<td>PQ</td>
+<td></td>
+</tr>
+<tr>
+<th>Bus 4</th>
+<td>1.0</td>
+<td></td>
+<td>0.0</td>
+<td>0.0</td>
+<td>AC</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>inf</td>
+<td>PQ</td>
+<td></td>
+</tr>
+</tbody>
 </table>
 </div>
-
 <p>根据例题<strong>11-5</strong>给定条件，节点3的控制类型应是<code>PV</code>，节点4应为<code>Slack</code>，即松弛节点/平衡节点。
 这与上表显示不符，<strong>但先别急着直接改变它们的值</strong>，文档对于<code>control</code>值是这么说的：</p>
 <blockquote>
@@ -240,30 +231,28 @@
 <p>也就是说，进行潮流计算时，程序会根据所给条件，自动判断哪些节点是哪些类型，并在计算后作为输出结果。</p>
 <h3>参数设置</h3>
 <p>接下来向各节点添加支路，变压器和发电机,并添加负载。</p>
-<div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Line&#39;</span><span class="p">,</span><span class="s1">&#39;Line 1-2&#39;</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">&#39;Bus 1&#39;</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">&#39;Bus 2&#39;</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Line'</span><span class="p">,</span><span class="s1">'Line 1-2'</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">'Bus 1'</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">'Bus 2'</span><span class="p">,</span>
         <span class="n">r</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mf">0.01528</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Line&#39;</span><span class="p">,</span><span class="s1">&#39;Line 1-4&#39;</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">&#39;Bus 1&#39;</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">&#39;Bus 4&#39;</span><span class="p">,</span>
+<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Line'</span><span class="p">,</span><span class="s1">'Line 1-4'</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">'Bus 1'</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">'Bus 4'</span><span class="p">,</span>
         <span class="n">r</span><span class="o">=</span><span class="mf">0.12</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mf">0.0192</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Line&#39;</span><span class="p">,</span><span class="s1">&#39;Line 2-4&#39;</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">&#39;Bus 2&#39;</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">&#39;Bus 4&#39;</span><span class="p">,</span>
+<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Line'</span><span class="p">,</span><span class="s1">'Line 2-4'</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">'Bus 2'</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">'Bus 4'</span><span class="p">,</span>
         <span class="n">r</span><span class="o">=</span><span class="mf">0.08</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mf">0.01413</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Transformer&#39;</span><span class="p">,</span><span class="s1">&#39;T_1&#39;</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">&#39;Bus 3&#39;</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">&#39;Bus 1&#39;</span><span class="p">,</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;pi&#39;</span><span class="p">,</span> <span class="n">tap_ratio</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.3</span> <span class="o">/</span> <span class="mf">1.1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Transformer'</span><span class="p">,</span><span class="s1">'T_1'</span><span class="p">,</span> <span class="n">bus0</span><span class="o">=</span><span class="s1">'Bus 3'</span><span class="p">,</span> <span class="n">bus1</span><span class="o">=</span><span class="s1">'Bus 1'</span><span class="p">,</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="s1">'pi'</span><span class="p">,</span> <span class="n">tap_ratio</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.3</span> <span class="o">/</span> <span class="mf">1.1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Generator&#39;</span><span class="p">,</span><span class="s1">&#39;G_4&#39;</span><span class="p">,</span><span class="n">bus</span> <span class="o">=</span> <span class="s1">&#39;Bus 4&#39;</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="s1">&#39;Slack&#39;</span><span class="p">)</span>
-<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Generator&#39;</span><span class="p">,</span><span class="s1">&#39;G_3&#39;</span><span class="p">,</span><span class="n">bus</span> <span class="o">=</span> <span class="s1">&#39;Bus 3&#39;</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="s1">&#39;PV&#39;</span><span class="p">,</span>
+<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Generator'</span><span class="p">,</span><span class="s1">'G_4'</span><span class="p">,</span><span class="n">bus</span> <span class="o">=</span> <span class="s1">'Bus 4'</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="s1">'Slack'</span><span class="p">)</span>
+<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Generator'</span><span class="p">,</span><span class="s1">'G_3'</span><span class="p">,</span><span class="n">bus</span> <span class="o">=</span> <span class="s1">'Bus 3'</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="s1">'PV'</span><span class="p">,</span>
         <span class="n">p_set</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span>
 
-<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Load&#39;</span><span class="p">,</span><span class="s1">&#39;Load 1&#39;</span><span class="p">,</span><span class="n">bus</span><span class="o">=</span><span class="s1">&#39;Bus 1&#39;</span><span class="p">,</span>
+<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Load'</span><span class="p">,</span><span class="s1">'Load 1'</span><span class="p">,</span><span class="n">bus</span><span class="o">=</span><span class="s1">'Bus 1'</span><span class="p">,</span>
         <span class="n">p_set</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span><span class="n">q_set</span> <span class="o">=</span> <span class="mf">0.18</span><span class="p">)</span>
-<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;Load&#39;</span><span class="p">,</span><span class="s1">&#39;Load 2&#39;</span><span class="p">,</span><span class="n">bus</span><span class="o">=</span><span class="s1">&#39;Bus 2&#39;</span><span class="p">,</span>
+<span class="n">net</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">'Load'</span><span class="p">,</span><span class="s1">'Load 2'</span><span class="p">,</span><span class="n">bus</span><span class="o">=</span><span class="s1">'Bus 2'</span><span class="p">,</span>
         <span class="n">p_set</span> <span class="o">=</span> <span class="mf">0.55</span><span class="p">,</span><span class="n">q_set</span> <span class="o">=</span> <span class="mf">0.13</span><span class="p">)</span>
 </pre></div>
-
-
 <p>关于上面的代码，有三点需要注意：
-* 变压器的变比默认是bus0与bus1的电压之比，即<span class="math">\(k = V_{bus0} : V_{bus1}\)</span>
-* PyPSA内部的变压器模型把输入的阻抗和导纳参数认为是归算到低压侧的参数，因此上面需要把参数除以变比平方来归算到低压侧。
+<em> 变压器的变比默认是bus0与bus1的电压之比，即<span class="math">\(k = V_{bus0} : V_{bus1}\)</span>
+</em> PyPSA内部的变压器模型把输入的阻抗和导纳参数认为是归算到低压侧的参数，因此上面需要把参数除以变比平方来归算到低压侧。
 * 连接有发电机的母线（Bus）的控制类型会随发电机的类型而改变。
 文档原文是：</p>
 <blockquote>
@@ -273,23 +262,19 @@ attached). Any PV generator will make the whole bus a PV bus. For PV buses, the 
 on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.</p>
 </blockquote>
 <p>因此还需设置3、4节点参数如下：</p>
-<div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">buses</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Bus 3&#39;</span><span class="p">,</span><span class="s1">&#39;v_mag_pu_set&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.10</span>
-<span class="n">net</span><span class="o">.</span><span class="n">buses</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Bus 4&#39;</span><span class="p">,</span><span class="s1">&#39;v_mag_pu_set&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.05</span>
+<div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">buses</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">'Bus 3'</span><span class="p">,</span><span class="s1">'v_mag_pu_set'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.10</span>
+<span class="n">net</span><span class="o">.</span><span class="n">buses</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">'Bus 4'</span><span class="p">,</span><span class="s1">'v_mag_pu_set'</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.05</span>
 </pre></div>
-
-
 <h3>一致性检查——用于排查潜在错误</h3>
 <p>至此，算例所给的所有参数都用上了，在进行潮流计算前，运行一致性检查：</p>
 <div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">consistency_check</span><span class="p">()</span>
 </pre></div>
-
-
 <div class="highlight"><pre><span></span><span class="n">WARNING</span><span class="o">:</span><span class="n">pypsa</span><span class="o">.</span><span class="na">components</span><span class="o">:</span><span class="n">The</span> <span class="n">following</span> <span class="n">transformers</span> <span class="n">have</span> <span class="n">zero</span> <span class="n">r</span><span class="o">,</span> <span class="n">which</span> <span class="n">could</span> <span class="k">break</span> <span class="n">the</span> <span class="n">linear</span> <span class="n">load</span> <span class="n">flow</span><span class="o">:</span>
-<span class="n">Index</span><span class="o">([</span><span class="s1">&#39;T_1&#39;</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="o">)</span>
+<span class="n">Index</span><span class="o">([</span><span class="s1">'T_1'</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'object'</span><span class="o">)</span>
 <span class="n">WARNING</span><span class="o">:</span><span class="n">pypsa</span><span class="o">.</span><span class="na">components</span><span class="o">:</span><span class="n">The</span> <span class="n">following</span> <span class="n">transformers</span> <span class="n">have</span> <span class="n">zero</span> <span class="n">s_nom</span><span class="o">,</span> <span class="n">which</span> <span class="k">is</span> <span class="n">used</span> <span class="n">to</span> <span class="n">define</span> <span class="n">the</span> <span class="n">impedance</span> <span class="n">and</span> <span class="n">will</span> <span class="n">thus</span> <span class="k">break</span> <span class="n">the</span> <span class="n">load</span> <span class="n">flow</span><span class="o">:</span>
-<span class="n">Index</span><span class="o">([</span><span class="s1">&#39;T_1&#39;</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="o">)</span>
+<span class="n">Index</span><span class="o">([</span><span class="s1">'T_1'</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'object'</span><span class="o">)</span>
 <span class="n">WARNING</span><span class="o">:</span><span class="n">pypsa</span><span class="o">.</span><span class="na">components</span><span class="o">:</span><span class="n">The</span> <span class="n">following</span> <span class="n">attributes</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dataframe</span> <span class="n">transformers</span> <span class="n">have</span> <span class="n">the</span> <span class="n">wrong</span> <span class="n">dtype</span><span class="o">:</span>
-<span class="n">Index</span><span class="o">([</span><span class="s1">&#39;tap_side&#39;</span><span class="o">,</span> <span class="s1">&#39;tap_position&#39;</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;attribute&#39;</span><span class="o">)</span>
+<span class="n">Index</span><span class="o">([</span><span class="s1">'tap_side'</span><span class="o">,</span> <span class="s1">'tap_position'</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'object'</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'attribute'</span><span class="o">)</span>
 <span class="n">They</span> <span class="n">are</span><span class="o">:</span>
 <span class="n">attribute</span>
 <span class="n">tap_side</span>        <span class="n">int64</span>
@@ -301,7 +286,7 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
 <span class="n">tap_position</span>    <span class="n">int32</span>
 <span class="n">Name</span><span class="o">:</span> <span class="n">dtype</span><span class="o">,</span> <span class="n">dtype</span><span class="o">:</span> <span class="n">object</span>
 <span class="n">WARNING</span><span class="o">:</span><span class="n">pypsa</span><span class="o">.</span><span class="na">components</span><span class="o">:</span><span class="n">The</span> <span class="n">following</span> <span class="n">attributes</span> <span class="n">of</span> <span class="n">the</span> <span class="n">dataframe</span> <span class="n">generators</span> <span class="n">have</span> <span class="n">the</span> <span class="n">wrong</span> <span class="n">dtype</span><span class="o">:</span>
-<span class="n">Index</span><span class="o">([</span><span class="s1">&#39;min_up_time&#39;</span><span class="o">,</span> <span class="s1">&#39;min_down_time&#39;</span><span class="o">,</span> <span class="s1">&#39;initial_status&#39;</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;attribute&#39;</span><span class="o">)</span>
+<span class="n">Index</span><span class="o">([</span><span class="s1">'min_up_time'</span><span class="o">,</span> <span class="s1">'min_down_time'</span><span class="o">,</span> <span class="s1">'initial_status'</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'object'</span><span class="o">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'attribute'</span><span class="o">)</span>
 <span class="n">They</span> <span class="n">are</span><span class="o">:</span>
 <span class="n">attribute</span>
 <span class="n">min_up_time</span>       <span class="n">int64</span>
@@ -315,40 +300,32 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
 <span class="n">initial_status</span>    <span class="n">int32</span>
 <span class="n">Name</span><span class="o">:</span> <span class="n">dtype</span><span class="o">,</span> <span class="n">dtype</span><span class="o">:</span> <span class="n">object</span>
 </pre></div>
-
-
 <p>有几条<code>warning</code>，我们能处理的是第二条，这关系的到潮流计算的正确性，至于其他，暂时先不予理会。(<em>其实在写这篇文章时Dawn也还不知道其他<code>warning</code>会有什么影响</em>)</p>
 <div class="highlight"><pre><span></span><span class="c1">#warning处理：设置变压器基准功率</span>
 <span class="n">net</span><span class="o">.</span><span class="n">transformers</span><span class="o">.</span><span class="n">s_nom</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="c1">#计算潮流</span>
 <span class="n">net</span><span class="o">.</span><span class="n">pf</span><span class="p">()</span>
 </pre></div>
-
-
 <div class="highlight"><pre><span></span><span class="n">INFO</span><span class="o">:</span><span class="n">pypsa</span><span class="o">.</span><span class="na">pf</span><span class="o">:</span><span class="n">Slack</span> <span class="n">bus</span> <span class="k">for</span> <span class="n">sub</span><span class="o">-</span><span class="n">network</span> <span class="mi">0</span> <span class="k">is</span> <span class="n">Bus</span> <span class="mi">4</span>
-<span class="n">INFO</span><span class="o">:</span><span class="n">pypsa</span><span class="o">.</span><span class="na">pf</span><span class="o">:</span><span class="n">Performing</span> <span class="n">non</span><span class="o">-</span><span class="n">linear</span> <span class="n">load</span><span class="o">-</span><span class="n">flow</span> <span class="n">on</span> <span class="n">AC</span> <span class="n">sub</span><span class="o">-</span><span class="n">network</span> <span class="n">SubNetwork</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">snapshots</span> <span class="n">Index</span><span class="o">([</span><span class="s1">&#39;now&#39;</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="o">)</span>
+<span class="n">INFO</span><span class="o">:</span><span class="n">pypsa</span><span class="o">.</span><span class="na">pf</span><span class="o">:</span><span class="n">Performing</span> <span class="n">non</span><span class="o">-</span><span class="n">linear</span> <span class="n">load</span><span class="o">-</span><span class="n">flow</span> <span class="n">on</span> <span class="n">AC</span> <span class="n">sub</span><span class="o">-</span><span class="n">network</span> <span class="n">SubNetwork</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">snapshots</span> <span class="n">Index</span><span class="o">([</span><span class="s1">'now'</span><span class="o">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">'object'</span><span class="o">)</span>
 <span class="n">INFO</span><span class="o">:</span><span class="n">pypsa</span><span class="o">.</span><span class="na">pf</span><span class="o">:</span><span class="n">Newton</span><span class="o">-</span><span class="n">Raphson</span> <span class="n">solved</span> <span class="k">in</span> <span class="mi">3</span> <span class="n">iterations</span> <span class="k">with</span> <span class="n">error</span> <span class="n">of</span> <span class="mf">0.000000</span> <span class="k">in</span> <span class="mf">0.015626</span> <span class="n">seconds</span>
 
 
 
 
 
-<span class="o">{</span><span class="s1">&#39;n_iter&#39;</span><span class="o">:</span>      <span class="mi">0</span>
- <span class="n">now</span>  <span class="mi">3</span><span class="o">,</span> <span class="s1">&#39;error&#39;</span><span class="o">:</span>                 <span class="mi">0</span>
- <span class="n">now</span>  <span class="mf">1.104187</span><span class="n">e</span><span class="o">-</span><span class="mi">07</span><span class="o">,</span> <span class="s1">&#39;converged&#39;</span><span class="o">:</span>         <span class="mi">0</span>
+<span class="o">{</span><span class="s1">'n_iter'</span><span class="o">:</span>      <span class="mi">0</span>
+ <span class="n">now</span>  <span class="mi">3</span><span class="o">,</span> <span class="s1">'error'</span><span class="o">:</span>                 <span class="mi">0</span>
+ <span class="n">now</span>  <span class="mf">1.104187</span><span class="n">e</span><span class="o">-</span><span class="mi">07</span><span class="o">,</span> <span class="s1">'converged'</span><span class="o">:</span>         <span class="mi">0</span>
  <span class="n">now</span>  <span class="n">True</span><span class="o">}</span>
 </pre></div>
-
-
 <h3>结果</h3>
 <p>然后显示出结果：</p>
 <div class="highlight"><pre><span></span><span class="c1">#各节点功率</span>
 <span class="n">net</span><span class="o">.</span><span class="n">buses_t</span><span class="o">.</span><span class="n">p</span>
 </pre></div>
-
-
 <div>
-<style scoped>
+<style scoped="">
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -361,34 +338,31 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Bus 1</th>
-      <th>Bus 2</th>
-      <th>Bus 3</th>
-      <th>Bus 4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>now</th>
-      <td>-0.3</td>
-      <td>-0.55</td>
-      <td>0.5</td>
-      <td>0.367883</td>
-    </tr>
-  </tbody>
+<table class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Bus 1</th>
+<th>Bus 2</th>
+<th>Bus 3</th>
+<th>Bus 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>now</th>
+<td>-0.3</td>
+<td>-0.55</td>
+<td>0.5</td>
+<td>0.367883</td>
+</tr>
+</tbody>
 </table>
 </div>
-
 <div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">buses_t</span><span class="o">.</span><span class="n">q</span>
 </pre></div>
-
-
 <div>
-<style scoped>
+<style scoped="">
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -401,35 +375,32 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Bus 1</th>
-      <th>Bus 2</th>
-      <th>Bus 3</th>
-      <th>Bus 4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>now</th>
-      <td>-0.18</td>
-      <td>-0.13</td>
-      <td>0.093411</td>
-      <td>0.264698</td>
-    </tr>
-  </tbody>
+<table class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Bus 1</th>
+<th>Bus 2</th>
+<th>Bus 3</th>
+<th>Bus 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>now</th>
+<td>-0.18</td>
+<td>-0.13</td>
+<td>0.093411</td>
+<td>0.264698</td>
+</tr>
+</tbody>
 </table>
 </div>
-
 <div class="highlight"><pre><span></span><span class="c1">#各线路功率</span>
 <span class="n">net</span><span class="o">.</span><span class="n">lines_t</span><span class="o">.</span><span class="n">p0</span>
 </pre></div>
-
-
 <div>
-<style scoped>
+<style scoped="">
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -442,33 +413,30 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Line 1-2</th>
-      <th>Line 1-4</th>
-      <th>Line 2-4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>now</th>
-      <td>0.246244</td>
-      <td>-0.046244</td>
-      <td>-0.31001</td>
-    </tr>
-  </tbody>
+<table class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Line 1-2</th>
+<th>Line 1-4</th>
+<th>Line 2-4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>now</th>
+<td>0.246244</td>
+<td>-0.046244</td>
+<td>-0.31001</td>
+</tr>
+</tbody>
 </table>
 </div>
-
 <div class="highlight"><pre><span></span><span class="c1">#各母线电压幅值</span>
 <span class="n">net</span><span class="o">.</span><span class="n">buses_t</span><span class="o">.</span><span class="n">v_mag_pu</span>
 </pre></div>
-
-
 <div>
-<style scoped>
+<style scoped="">
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -481,35 +449,32 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Bus 1</th>
-      <th>Bus 2</th>
-      <th>Bus 3</th>
-      <th>Bus 4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>now</th>
-      <td>0.984675</td>
-      <td>0.964798</td>
-      <td>1.1</td>
-      <td>1.05</td>
-    </tr>
-  </tbody>
+<table class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Bus 1</th>
+<th>Bus 2</th>
+<th>Bus 3</th>
+<th>Bus 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>now</th>
+<td>0.984675</td>
+<td>0.964798</td>
+<td>1.1</td>
+<td>1.05</td>
+</tr>
+</tbody>
 </table>
 </div>
-
 <div class="highlight"><pre><span></span><span class="c1">#各母线电压相角，转换为角度制表示</span>
 <span class="n">net</span><span class="o">.</span><span class="n">buses_t</span><span class="o">.</span><span class="n">v_ang</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
 </pre></div>
-
-
 <div>
-<style scoped>
+<style scoped="">
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -522,28 +487,27 @@ on the bus, not the generator, with bus.v_mag_pu_set since it is a bus property.
         text-align: right;
     }
 </style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Bus 1</th>
-      <th>Bus 2</th>
-      <th>Bus 3</th>
-      <th>Bus 4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>now</th>
-      <td>-0.500171</td>
-      <td>-6.450304</td>
-      <td>6.732349</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
+<table class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>Bus 1</th>
+<th>Bus 2</th>
+<th>Bus 3</th>
+<th>Bus 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>now</th>
+<td>-0.500171</td>
+<td>-6.450304</td>
+<td>6.732349</td>
+<td>0.0</td>
+</tr>
+</tbody>
 </table>
 </div>
-
 <h2>小结</h2>
 <p>以上用一个算例对PyPSA进行了简单介绍，PyPSA还带有一个基于Web的图形界面，效果同样不错，具体可以看看<a href="https://www.pypsa.org/animations/pypsa-eur-30/">这个演示</a>。</p>
 <p>除了潮流计算，PyPSA还能进行最优潮流规划(OPF)，更多请参见官方文档</p>
