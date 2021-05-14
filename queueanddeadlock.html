@@ -2,12 +2,12 @@
 <html lang="zh-cn">
 
 <head>
-        <meta charset="utf-8">
+            <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-        <title>Dawn's博客 - Categories</title>
+        <title>队列与死锁</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
@@ -31,8 +31,26 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-                <meta property="og:locale" content="">
+
+
+        <meta name="description" content="在硬件相关的开发中，会遇到两个进程都需要访问同一个硬件资源的情况。例如同一个串口分接到多个设备上去，两个进程都需要执行“写入->等待响应->读取”的操作，那么必须采取一定的机制来保证这两个进程的操作互不干扰，否则可能产生“A写入->设备响应A->B读取”的错乱现象。...">
+
+        <meta name="author" content="Dawn">
+
+        <meta name="tags" content="任务调度">
+        <meta name="tags" content="队列">
+
+	                <meta property="og:locale" content="">
 		<meta property="og:site_name" content="Dawn's博客">
+
+	<meta property="og:type" content="article">
+            <meta property="article:author" content="/author/dawn.html">
+	<meta property="og:url" content="/queueanddeadlock.html">
+	<meta property="og:title" content="队列与死锁">
+	<meta property="article:published_time" content="2021-05-14 00:00:00+08:00">
+            <meta property="og:description" content="在硬件相关的开发中，会遇到两个进程都需要访问同一个硬件资源的情况。例如同一个串口分接到多个设备上去，两个进程都需要执行“写入->等待响应->读取”的操作，那么必须采取一定的机制来保证这两个进程的操作互不干扰，否则可能产生“A写入->设备响应A->B读取”的错乱现象。...">
+
+            <meta property="og:image" content="/theme/images/post-bg.jpg">
 </head>
 
 <body>
@@ -65,12 +83,17 @@
     </nav>
 
     <!-- Page Header -->
-        <header class="intro-header" style="background-image: url('/theme/images/home-bg.jpg')">
+        <header class="intro-header" style="background-image: url('/theme/images/post-bg.jpg')">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <div class="post-heading">
-                        <h1>Dawn's博客 - Categories</h1>
+                        <h1>队列与死锁</h1>
+                        <span class="meta">Posted by
+                                <a href="/author/dawn.html">Dawn</a>
+                             on 周五 14 五月 2021
+                        </span>
+                        
                     </div>
                 </div>
             </div>
@@ -81,13 +104,23 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-    <ul>
-        <li><a href="/category/bi-ji.html">笔记</a></li>
-        <li><a href="/category/misc.html">misc</a></li>
-        <li><a href="/category/posts.html">Posts</a></li>
-        <li><a href="/category/yi-yu.html">一语</a></li>
-        <li><a href="/category/zong-jie.html">总结</a></li>
-    </ul>
+    <!-- Post Content -->
+    <article>
+        <p>在硬件相关的开发中，会遇到两个进程都需要访问同一个硬件资源的情况。例如同一个串口分接到多个设备上去，两个进程都需要执行“写入-&gt;等待响应-&gt;读取”的操作，那么必须采取一定的机制来保证这两个进程的操作互不干扰，否则可能产生“A写入-&gt;设备响应A-&gt;B读取”的错乱现象。</p>
+<p>信号量就是为解决这一问题而产生的，其机制如下：</p>
+<p>针对某一硬件资源（如串口），引入信号量S（可以理解为访问权限），比如进程A在获得COM1的访问权限之后，进程B试图访问COM1，这时进程B原地等待COM1被进程A释放。那么每个进程访问硬件时的操作流程为：<strong>获取信号量-&gt;读写操作-&gt;释放信号量</strong>。</p>
+<p>上面的例子是硬件只有一个的情况，只有被占用和未被占用两种状态，可以用一个bit来实现，这时的信号量又称为互斥量。如果硬件不唯一，例如办公室有多台网络打印机，不同主机不定期发送打印任务，那么信号量可以用多个bit，用来表示剩余可用硬件资源的数目。</p>
+<p><strong>信号量使用不当可能造成死锁的问题</strong>，考虑二值信号量的情况（即互斥量，有时也称为锁），假定进程A获取了信号量1，进程B获取了信号量2，此时A试图获取信号量2，B试图获取信号量1，A和B互相占用了对方需要的信号量，就陷入了死锁。推荐的做法是同一个进程在获取到一个信号量时，不要再试图获取另一个信号量，如果必须使用多个信号量才能实现想要的功能，可以使用队列进行任务调度。</p>
+<p>队列也可用于解决上述资源竞争问题，即每个需访问竞争性资源的进程进入队列等候，也能保证同一时间只有一个进程在访问硬件。</p>
+<p><em>上述“进程”有些地方使用“线程”一词，这里没有严格区分</em></p>
+    </article>
+
+        <div class="tags">
+            <p>tags: <a href="/tag/ren-wu-diao-du.html">任务调度</a>, <a href="/tag/dui-lie.html">队列</a></p>
+        </div>
+
+    <hr>
+
             </div>
         </div>
     </div>
